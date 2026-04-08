@@ -1,6 +1,7 @@
 using CodeQuest.Data;
 using CodeQuest.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,7 +63,22 @@ app.UseAuthorization();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
+    if (db.Database.ProviderName != null && db.Database.ProviderName.Contains("Npgsql"))
+    {
+        try
+        {
+            var creator = db.Database.GetService<Microsoft.EntityFrameworkCore.Storage.IRelationalDatabaseCreator>();
+            creator.CreateTables();
+        }
+        catch (Exception ex) when (ex.Message.Contains("already exists") || (ex.InnerException?.Message.Contains("already exists") ?? false))
+        {
+            // Ignore if tables already exist
+        }
+    }
+    else
+    {
+        db.Database.EnsureCreated();
+    }
     DbSeeder.Seed(db);
 }
 
