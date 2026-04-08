@@ -1,0 +1,83 @@
+@model List<LeaderboardEntry>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero">
+    <div class="hero-inner">
+        <div class="hero-eyebrow">◈ An Interactive Learning Adventure</div>
+        <h1 class="hero-title">CodeQuest</h1>
+        <p class="hero-sub">The System Core</p>
+        <p class="hero-desc">
+            Log into the central mainframe to secure the system.
+            Guided by the automaton LOGI, master <strong>8 core coding concepts</strong>
+            through story, code, and quiz — one chapter at a time.
+        </p>
+
+        <div class="concept-chips">
+            <span class="chip">Variables</span>
+            <span class="chip">Data Types</span>
+            <span class="chip">Conditionals</span>
+            <span class="chip">Loops</span>
+            <span class="chip">Functions</span>
+            <span class="chip">Lists</span>
+            <span class="chip">Dictionaries</span>
+            <span class="chip">Classes</span>
+            <span class="chip">Exceptions</span>
+        </div>
+
+        <form method="post" asp-controller="Home" asp-action="Start" class="start-form">
+            <input type="text"
+                   name="PlayerName"
+                   class="name-input"
+                   placeholder="Enter your name, Operator…"
+                   maxlength="40"
+                   autocomplete="off"
+                   required />
+            <select name="Language" class="name-input" style="width: auto;">
+                <option value="en">English</option>
+                <option value="sq">Shqip</option>
+            </select>
+            <button type="submit" class="btn-primary">Begin the Quest →</button>
+        </form>
+    </div>
+
+    <div class="hero-deco" aria-hidden="true">
+        <div class="deco-ring r1"></div>
+        <div class="deco-ring r2"></div>
+        <div class="deco-ring r3"></div>
+        <span class="deco-glyph">💻</span>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <section class="home-leaderboard">
+        <h2 class="section-title">Top Operators</h2>
+        <table class="lb-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Correct</th>
+                    <th>Rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var e = Model[i];
+                    <tr class="@(i == 0 ? "top-row" : "")">
+                        <td class="rank-num">@(i + 1)</td>
+                        <td>@e.PlayerName</td>
+                        <td class="score-cell">@e.Score</td>
+                        <td>@e.CorrectAnswers</td>
+                        <td><span class="rank-badge">@e.Rank</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-controller="Game" asp-action="Leaderboard" class="lb-link">View full leaderboard →</a>
+    </section>
+}
