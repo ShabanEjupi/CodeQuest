@@ -13,8 +13,19 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+var rawConnString = builder.Configuration["SUPABASE_CONNECTION_STRING"] 
+    ?? builder.Configuration.GetConnectionString("DefaultConnection") 
     ?? "Data Source=codequest.db";
+
+var connectionString = rawConnString;
+
+if (rawConnString.StartsWith("postgres://") || rawConnString.StartsWith("postgresql://"))
+{
+    var uri = new Uri(rawConnString);
+    var userInfo = uri.UserInfo.Split(':');
+    var password = userInfo.Length > 1 ? userInfo[1] : "";
+    connectionString = $"Host={uri.Host};Port={(uri.Port > 0 ? uri.Port : 5432)};Database={uri.LocalPath.TrimStart('/')};Username={userInfo[0]};Password={password};Ssl Mode=Require;Trust Server Certificate=true";
+}
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
