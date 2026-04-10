@@ -68,11 +68,24 @@ using (var scope = app.Services.CreateScope())
         try
         {
             var creator = db.Database.GetService<Microsoft.EntityFrameworkCore.Storage.IRelationalDatabaseCreator>();
-            creator.CreateTables();
+            var script = creator.GenerateCreateScript();
+            var commands = script.Split(';', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var command in commands)
+            {
+                if (string.IsNullOrWhiteSpace(command)) continue;
+                try
+                {
+                    db.Database.ExecuteSqlRaw(command);
+                }
+                catch
+                {
+                    // Ignore if tables/indexes already exist
+                }
+            }
         }
-        catch (Exception ex) when (ex.Message.Contains("already exists") || (ex.InnerException?.Message.Contains("already exists") ?? false))
+        catch (Exception ex)
         {
-            // Ignore if tables already exist
+            Console.WriteLine($"Error initializing db: {ex.Message}");
         }
     }
     else
