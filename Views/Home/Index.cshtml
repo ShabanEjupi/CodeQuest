@@ -3,12 +3,22 @@
 }
 
 <div class="hero">
-    <div class="hero-inner">
+    <div class="hero-inner" style="max-width: 1200px; margin: auto;">
         <h1 class="hero-title">Welcome to KOSOVAPOS</h1>
-        <p class="hero-sub">Your All-In-One Point of Sale Solution</p>
-        <p class="hero-desc">
-            The next generation system tailored for Pizzerias, Supermarkets, and Clothing Stores. High performance, beautifully designed, and built to scale globally.
+        <p class="hero-sub" style="font-size: 1.5em; margin-bottom: 20px;">Your All-In-One Point of Sale Solution</p>
+        <p class="hero-desc" style="font-size: 1.2em; line-height: 1.6; margin-bottom: 30px;">
+            The next generation system tailored for Pizzerias, Supermarkets, and Clothing Stores. High performance, beautifully designed, and built to scale globally. Experience the future of retail management.
         </p>
-        <a asp-controller="Home" asp-action="Services" class="btn-primary">Explore Our Services</a>
+        <a asp-controller="Home" asp-action="Services" class="btn-primary" style="margin-bottom: 50px; display: inline-block;">Explore Our Services</a>
+
+        <div style="margin-top: 50px;">
+            <img src="~/img/front-pos-page.png" alt="Front POS Dashboard" style="width: 100%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);" />
+        </div>
+
+        <div style="margin-top: 50px; text-align: left; background: rgba(0,0,0,0.4); padding: 30px; border-radius: 8px;">
+            <h2 style="color: #ff5722; margin-bottom: 20px;">Empowering Modern Businesses</h2>
+            <p>KOSOVAPOS streamlines your operations by unifying all business aspects into an intuitive platform. Whether handling fast-paced pizzeria orders or bulk supermarket checkouts, KOSOVAPOS is the dependable foundation for your business's success.</p>
+        </div>
     </div>
 </div>
+

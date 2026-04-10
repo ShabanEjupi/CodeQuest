@@ -174,3 +174,23 @@ public class POSOrder
     public DateTime OrderDate { get; set; } = DateTime.UtcNow;
     public string Status { get; set; } = "Completed";
 }
+
+public class PosStaff
+{
+    public int Id { get; set; }
+    public int BusinessId { get; set; }
+    public Business Business { get; set; } = null!;
+    public string FullName { get; set; } = "";
+    public string Role { get; set; } = "Cashier"; // e.g., Cashier, Manager, Waiter
+    public string PinCode { get; set; } = "";
+}
+
+public class InventoryMovement
+{
+    public int Id { get; set; }
+    public int ProductItemId { get; set; }
+    public ProductItem ProductItem { get; set; } = null!;
+    public int QuantityChanged { get; set; }
+    public string Reason { get; set; } = "Sale"; // e.g., Sale, Restock, Return
+    public DateTime MovementDate { get; set; } = DateTime.UtcNow;
+}

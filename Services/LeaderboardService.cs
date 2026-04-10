@@ -40,6 +40,7 @@ public class LeaderboardService : ILeaderboardService
 
     public Task<List<LeaderboardEntry>> GetTopAsync(int count = 20) =>
         _db.LeaderboardEntries
+           .AsNoTracking()
            .OrderByDescending(e => e.Score)
            .ThenByDescending(e => e.AchievedAt)
            .Take(count)

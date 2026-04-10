@@ -18,6 +18,8 @@ public class AppDbContext : DbContext
     public DbSet<PosSystem> PosSystems => Set<PosSystem>();
     public DbSet<ProductItem> ProductItems => Set<ProductItem>();
     public DbSet<POSOrder> POSOrders => Set<POSOrder>();
+    public DbSet<PosStaff> PosStaff => Set<PosStaff>();
+    public DbSet<InventoryMovement> InventoryMovements => Set<InventoryMovement>();
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
@@ -56,5 +58,21 @@ public class AppDbContext : DbContext
         mb.Entity<PosSystem>(e => e.HasKey(x => x.Id));
         mb.Entity<ProductItem>(e => e.HasKey(x => x.Id));
         mb.Entity<POSOrder>(e => e.HasKey(x => x.Id));
+        mb.Entity<PosStaff>(e => 
+        {
+            e.HasKey(x => x.Id);
+            e.HasOne(x => x.Business)
+             .WithMany()
+             .HasForeignKey(x => x.BusinessId)
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+        mb.Entity<InventoryMovement>(e => 
+        {
+            e.HasKey(x => x.Id);
+            e.HasOne(x => x.ProductItem)
+             .WithMany()
+             .HasForeignKey(x => x.ProductItemId)
+             .OnDelete(DeleteBehavior.Cascade);
+        });
     }
 }
