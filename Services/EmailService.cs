@@ -18,7 +18,9 @@ namespace CodeQuest.Services
         public EmailService(IConfiguration configuration)
         {
             // Attempt to get from env first, then config
-            _smtpPass = Environment.GetEnvironmentVariable("APP_PASSWORD") ?? configuration["APP_PASSWORD"] ?? string.Empty;
+            var pass = Environment.GetEnvironmentVariable("APP_PASSWORD") ?? configuration["APP_PASSWORD"] ?? string.Empty;
+            // Remove any spaces that might be present in the google app password
+            _smtpPass = pass.Replace(" ", "");
         }
 
         public async Task SendNoReplyEmailAsync(string toEmail, string subject, string body)
@@ -28,6 +30,7 @@ namespace CodeQuest.Services
             using var client = new SmtpClient("smtp.gmail.com", 587)
             {
                 EnableSsl = true,
+                UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(_smtpUser, _smtpPass)
             };
 
@@ -50,6 +53,7 @@ namespace CodeQuest.Services
             using var client = new SmtpClient("smtp.gmail.com", 587)
             {
                 EnableSsl = true,
+                UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(_smtpUser, _smtpPass)
             };
 

@@ -1,23 +1,32 @@
 @{
-    ViewData["Title"] = "Home";
+    var isSq = System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq";
+    ViewData["Title"] = isSq ? "Ballina" : "Home";
 }
 
 <div class="hero">
     <div class="hero-inner" style="max-width: 1200px; margin: auto;">
-        <h1 class="hero-title">Welcome to KOSOVAPOS</h1>
-        <p class="hero-sub" style="font-size: 1.5em; margin-bottom: 20px;">Your All-In-One Point of Sale Solution</p>
-        <p class="hero-desc" style="font-size: 1.2em; line-height: 1.6; margin-bottom: 30px;">
-            The next generation system tailored for Pizzerias, Supermarkets, and Clothing Stores. High performance, beautifully designed, and built to scale globally. Experience the future of retail management.
+        <h1 class="hero-title">@(isSq ? "Mirësevini në KOSOVAPOS" : "Welcome to KOSOVAPOS")</h1>
+        <p class="hero-sub" style="font-size: 1.5em; margin-bottom: 20px;">
+            @(isSq ? "Zgjidhja Juaj Gjithëpërfshirëse Për Pika Të Shitjes" : "Your All-In-One Point of Sale Solution")
         </p>
-        <a asp-controller="Home" asp-action="Services" class="btn-primary" style="margin-bottom: 50px; display: inline-block;">Explore Our Services</a>
+        <p class="hero-desc" style="font-size: 1.2em; line-height: 1.6; margin-bottom: 30px;">
+            @(isSq ? "Sistemi i gjeneratës së ardhshme i përshtatur për Pizzeri, Supermarkete dhe Dyqane Veshjesh. Performancë e lartë, e bukur në dizajn dhe e ndërtuar për t'u shkallëzuar globalisht. Përjetoni të ardhmen e menaxhimit të shitjes me pakicë." : "The next generation system tailored for Pizzerias, Supermarkets, and Clothing Stores. High performance, beautifully designed, and built to scale globally. Experience the future of retail management.")
+        </p>
+        <a asp-controller="Home" asp-action="Services" class="btn-primary" style="margin-bottom: 50px; display: inline-block;">
+            @(isSq ? "Eksploro Shërbimet Tona" : "Explore Our Services")
+        </a>
 
         <div style="margin-top: 50px;">
             <img src="~/img/front-pos-page.png" alt="Front POS Dashboard" style="width: 100%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);" />
         </div>
 
         <div style="margin-top: 50px; text-align: left; background: rgba(0,0,0,0.4); padding: 30px; border-radius: 8px;">
-            <h2 style="color: #ff5722; margin-bottom: 20px;">Empowering Modern Businesses</h2>
-            <p>KOSOVAPOS streamlines your operations by unifying all business aspects into an intuitive platform. Whether handling fast-paced pizzeria orders or bulk supermarket checkouts, KOSOVAPOS is the dependable foundation for your business's success.</p>
+            <h2 style="color: #ff5722; margin-bottom: 20px;">
+                @(isSq ? "Fuqizimi i Bizneseve Moderne" : "Empowering Modern Businesses")
+            </h2>
+            <p>
+                @(isSq ? "KOSOVAPOS thekson operacionet tuaja duke unifikuar të gjitha aspektet e biznesit në një platformë intuitive. Qoftë duke menaxhuar porosi të shpejta për pizzeria apo pagesa masive të supermarketeve, KOSOVAPOS është themeli i besueshëm për suksesin e biznesit tuaj. Integrim i plotë, raporte të thella dhe qasje e vazhdueshme e bëjnë këtë sistem një zgjidhje të padiskutueshme." : "KOSOVAPOS streamlines your operations by unifying all business aspects into an intuitive platform. Whether handling fast-paced pizzeria orders or bulk supermarket checkouts, KOSOVAPOS is the dependable foundation for your business's success. With advanced reporting, inventory management, and intuitive user interfaces, managing a modern retail business has never been easier.")
+            </p>
         </div>
     </div>
 </div>

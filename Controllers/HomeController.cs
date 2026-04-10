@@ -37,6 +37,17 @@ public class HomeController : Controller
     public IActionResult Contact() => View();
 
     [HttpPost]
+    public IActionResult SetLanguage(string culture, string returnUrl)
+    {
+        Response.Cookies.Append(
+            Microsoft.AspNetCore.Localization.CookieRequestCultureProvider.DefaultCookieName,
+            Microsoft.AspNetCore.Localization.CookieRequestCultureProvider.MakeCookieValue(new Microsoft.AspNetCore.Localization.RequestCulture(culture)),
+            new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+        );
+        return LocalRedirect(returnUrl ?? "/");
+    }
+
+    [HttpPost]
     public async Task<IActionResult> SendContactMessage(string Name, string Email, string Message)
     {
         await _emailService.SendContactMessageAsync(Name, Email, Message);

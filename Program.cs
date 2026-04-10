@@ -24,7 +24,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
 // ── Services ─────────────────────────────────────────────────────────
-builder.Services.AddControllersWithViews();
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization();
+
+builder.Services.Configure<Microsoft.AspNetCore.Builder.RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[] { "en", "sq" };
+    options.SetDefaultCulture("en");
+    options.AddSupportedCultures(supportedCultures);
+    options.AddSupportedUICultures(supportedCultures);
+});
 builder.Services.AddOutputCache();
 builder.Services.AddResponseCompression(options =>
 {
@@ -88,6 +98,9 @@ app.UseResponseCompression();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseRequestLocalization();
+
 app.UseOutputCache();
 app.UseSession();
 app.UseAuthorization();
