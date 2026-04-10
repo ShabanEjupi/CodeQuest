@@ -21,6 +21,11 @@ public class AppDbContext : DbContext
     public DbSet<PosStaff> PosStaff => Set<PosStaff>();
     public DbSet<InventoryMovement> InventoryMovements => Set<InventoryMovement>();
 
+    // New Tables
+    public DbSet<Vendor> Vendors => Set<Vendor>();
+    public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<PurchaseOrder> PurchaseOrders => Set<PurchaseOrder>();
+
     protected override void OnModelCreating(ModelBuilder mb)
     {
         mb.Entity<Chapter>(e =>
@@ -72,6 +77,17 @@ public class AppDbContext : DbContext
             e.HasOne(x => x.ProductItem)
              .WithMany()
              .HasForeignKey(x => x.ProductItemId)
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        mb.Entity<Vendor>(e => e.HasKey(x => x.Id));
+        mb.Entity<Customer>(e => e.HasKey(x => x.Id));
+        mb.Entity<PurchaseOrder>(e => 
+        {
+            e.HasKey(x => x.Id);
+            e.HasOne(x => x.Vendor)
+             .WithMany()
+             .HasForeignKey(x => x.VendorId)
              .OnDelete(DeleteBehavior.Cascade);
         });
     }

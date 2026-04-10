@@ -194,3 +194,30 @@ public class InventoryMovement
     public string Reason { get; set; } = "Sale"; // e.g., Sale, Restock, Return
     public DateTime MovementDate { get; set; } = DateTime.UtcNow;
 }
+
+public class Vendor
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string ContactPerson { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+}
+
+public class Customer 
+{
+    public int Id { get; set; }
+    public string FullName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public int LoyaltyPoints { get; set; }
+}
+
+public class PurchaseOrder 
+{
+    public int Id { get; set; }
+    public int VendorId { get; set; }
+    public Vendor Vendor { get; set; } = null!;
+    public decimal TotalAmount { get; set; }
+    public DateTime OrderDate { get; set; } = DateTime.UtcNow;
+}

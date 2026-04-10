@@ -12,7 +12,7 @@ namespace CodeQuest.Services
 
     public class EmailService : IEmailService
     {
-        private readonly string _smtpUser = "info@kosovapos.com"; 
+        private readonly string _smtpUser = "etinup1@gmail.com"; 
         private readonly string _smtpPass;
 
         public EmailService(IConfiguration configuration)
