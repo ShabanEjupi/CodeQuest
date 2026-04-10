@@ -54,5 +54,29 @@
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+    @if (!string.IsNullOrEmpty(Configuration["CAMBER_AGENT"]))
+    {
+        <div id="camber-agent-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end;">
+            <iframe id="camber-agent-frame" src="@Configuration["CAMBER_AGENT"]" style="display: none; width: 350px; height: 500px; border: none; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin-bottom: 15px; background: white;" allow="microphone; camera"></iframe>
+            <button id="camber-agent-toggle" style="background-color: #2196f3; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; font-size: 24px; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center;" onclick="toggleCamberAgent()">
+                💬
+            </button>
+        </div>
+        <script>
+            function toggleCamberAgent() {
+                var frame = document.getElementById('camber-agent-frame');
+                var btn = document.getElementById('camber-agent-toggle');
+                if (frame.style.display === 'none') {
+                    frame.style.display = 'block';
+                    btn.innerHTML = '✖';
+                } else {
+                    frame.style.display = 'none';
+                    btn.innerHTML = '💬';
+                }
+            }
+        </script>
+    }
 </body>
 </html>

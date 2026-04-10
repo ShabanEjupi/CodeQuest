@@ -151,6 +151,24 @@ using (var scope = app.Services.CreateScope())
                      creator.CreateTables();
                  } catch { }
              }
+             else
+             {
+                 // Add missing columns if database exists but needs sync
+                 try {
+                     var conn = db.Database.GetDbConnection();
+                     if (conn.State != System.Data.ConnectionState.Open) conn.Open();
+                     using var cmd = conn.CreateCommand();
+                     cmd.CommandText = @"
+                         ALTER TABLE ""Chapters"" ADD COLUMN IF NOT EXISTS ""Language"" text DEFAULT 'en';
+                         ALTER TABLE ""Chapters"" ADD COLUMN IF NOT EXISTS ""GameType"" text DEFAULT 'Coding';
+                         ALTER TABLE ""GameSessions"" ADD COLUMN IF NOT EXISTS ""PlayerName"" text DEFAULT '';
+                         ALTER TABLE ""GameSessions"" ADD COLUMN IF NOT EXISTS ""Language"" text DEFAULT 'en';
+                         ALTER TABLE ""GameSessions"" ADD COLUMN IF NOT EXISTS ""GameType"" text DEFAULT 'Coding';
+                     ";
+                     cmd.ExecuteNonQuery();
+                     conn.Close();
+                 } catch { }
+             }
          }
          catch (Exception ex)
          {
