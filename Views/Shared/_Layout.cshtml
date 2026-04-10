@@ -17,7 +17,10 @@
         <a class="nav-brand" asp-controller="Home" asp-action="Index">
             <img src="~/favicon.ico" alt="KOSOVAPOS Logo" class="brand-icon" style="height:24px;width:auto;vertical-align:middle;margin-right:8px;" /> KOSOVAPOS
         </a>
-        <div class="nav-links">
+        <button class="hamburger-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
+            ☰
+        </button>
+        <div class="nav-links" id="navLinks">
             <a asp-controller="Home" asp-action="Index">@(System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq" ? "Ballina" : "Home")</a>
             <a asp-controller="Home" asp-action="Services">@(System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq" ? "Shërbimet" : "Services")</a>
             <a asp-controller="Home" asp-action="About">@(System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq" ? "Rreth Nesh" : "About Us")</a>
@@ -53,30 +56,18 @@
     </footer>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            var nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 
-    @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
-    @if (!string.IsNullOrEmpty(Configuration["CAMBER_AGENT"]))
-    {
-        <div id="camber-agent-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end;">
-            <iframe id="camber-agent-frame" src="@Configuration["CAMBER_AGENT"]" style="display: none; width: 350px; height: 500px; border: none; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin-bottom: 15px; background: white;" allow="microphone; camera"></iframe>
-            <button id="camber-agent-toggle" style="background-color: #2196f3; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; font-size: 24px; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center;" onclick="toggleCamberAgent()">
-                💬
-            </button>
-        </div>
-        <script>
-            function toggleCamberAgent() {
-                var frame = document.getElementById('camber-agent-frame');
-                var btn = document.getElementById('camber-agent-toggle');
-                if (frame.style.display === 'none') {
-                    frame.style.display = 'block';
-                    btn.innerHTML = '✖';
-                } else {
-                    frame.style.display = 'none';
-                    btn.innerHTML = '💬';
-                }
-            }
-        </script>
-    }
+    <div id="support-agent-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end;">
+        <a href="/Home/Contact" style="background-color: #2196f3; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; font-size: 24px; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; text-decoration: none;" title="Contact Support">
+            💬
+        </a>
+    </div>
 </body>
 </html>

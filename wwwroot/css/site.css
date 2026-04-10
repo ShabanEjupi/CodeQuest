@@ -678,3 +678,65 @@ a:hover {
     margin-top: 3rem;
 }
 
+/* ==========================================================================
+   Mobile Responsive Navigation & Design
+   ========================================================================== */
+.hamburger-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .site-nav {
+        flex-wrap: wrap;
+        padding: 1rem;
+    }
+
+    .hamburger-btn {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 1rem;
+        gap: 1rem;
+        background: var(--bg-panel);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links form {
+        margin-left: 0 !important;
+        margin-top: 0.5rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-sub {
+        font-size: 1.25rem;
+    }
+
+    .site-main {
+        padding: 1rem;
+    }
+    
+    .result-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
