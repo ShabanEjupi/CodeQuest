@@ -99,6 +99,7 @@ public class GameSessionService : IGameSessionService
     public async Task<GameSession?> GetCompletedAsync(string sessionKey)
     {
         var session = await _db.GameSessions
+            .AsNoTracking()
             .Include(s => s.Answers)
             .FirstOrDefaultAsync(s => s.SessionKey == sessionKey && s.IsComplete);
 

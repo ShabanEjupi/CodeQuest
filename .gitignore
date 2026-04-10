@@ -475,11 +475,17 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+Migrations/
+codequest.db
+out/
+
 # Windows shortcuts
 *.lnk
 
 # Vim temporary swap files
 *.swp
-c o d e q u e s t . d b  
- c o d e q u e s t . d b  
- 
+c o d e q u e s t . d b 
+ 
+ c o d e q u e s t . d b 
+ 
+ 

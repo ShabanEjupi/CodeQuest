@@ -127,3 +127,29 @@ public class LeaderboardViewModel
     public List<LeaderboardEntry> Entries { get; set; } = new();
     public LeaderboardEntry? PlayerEntry { get; set; }
 }
+
+// ── KosovaPOS Integration ──────────────────────────────────────────────
+
+public class Business
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string BusinessType { get; set; } = string.Empty; // Pizzeria, Supermarket, Clothing Store
+    public string Address { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public string TaxNumber { get; set; } = string.Empty;
+
+    public ICollection<PosSystem> PosSystems { get; set; } = new List<PosSystem>();
+}
+
+public class PosSystem
+{
+    public int Id { get; set; }
+    public int BusinessId { get; set; }
+    public Business Business { get; set; } = null!;
+    public string Version { get; set; } = "3.0";
+    public string SystemType { get; set; } = "Pizzeria POS"; // Can be dynamic
+    public bool FiscalPrinterEnabled { get; set; }
+    public string Theme { get; set; } = "Light";
+    public DateTime InstalledAt { get; set; } = DateTime.UtcNow;
+}

@@ -13,6 +13,10 @@ public class AppDbContext : DbContext
     public DbSet<AnswerRecord> AnswerRecords => Set<AnswerRecord>();
     public DbSet<LeaderboardEntry> LeaderboardEntries => Set<LeaderboardEntry>();
 
+    // KosovaPOS Integration
+    public DbSet<Business> Businesses => Set<Business>();
+    public DbSet<PosSystem> PosSystems => Set<PosSystem>();
+
     protected override void OnModelCreating(ModelBuilder mb)
     {
         mb.Entity<Chapter>(e =>
@@ -36,5 +40,17 @@ public class AppDbContext : DbContext
 
         mb.Entity<AnswerRecord>(e => e.HasKey(x => x.Id));
         mb.Entity<LeaderboardEntry>(e => e.HasKey(x => x.Id));
+
+        // KosovaPOS Business Data Modeling
+        mb.Entity<Business>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.HasMany(x => x.PosSystems)
+             .WithOne(x => x.Business)
+             .HasForeignKey(x => x.BusinessId)
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        mb.Entity<PosSystem>(e => e.HasKey(x => x.Id));
     }
 }

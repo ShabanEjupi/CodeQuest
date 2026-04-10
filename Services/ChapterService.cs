@@ -19,6 +19,7 @@ public class ChapterService : IChapterService
 
     public Task<List<Chapter>> GetAllAsync(string language) =>
         _db.Chapters
+           .AsNoTracking()
            .Where(c => c.Language == language)
            .Include(c => c.Choices.OrderBy(ch => ch.OrderIndex))
            .OrderBy(c => c.OrderIndex)
@@ -26,6 +27,7 @@ public class ChapterService : IChapterService
 
     public Task<Chapter?> GetByIndexAsync(int index, string language) =>
         _db.Chapters
+           .AsNoTracking()
            .Where(c => c.Language == language)
            .Include(c => c.Choices.OrderBy(ch => ch.OrderIndex))
            .OrderBy(c => c.OrderIndex)
