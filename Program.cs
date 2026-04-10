@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ── Services ─────────────────────────────────────────────────────────
 builder.Services.AddControllersWithViews();
+builder.Services.AddMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(2);

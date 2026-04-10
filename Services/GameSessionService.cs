@@ -20,11 +20,10 @@ public class GameSessionService : IGameSessionService
 
     public async Task<GameSession> CreateAsync(string sessionKey, string playerName, string language)
     {
-        // Remove any old session for this key
-        var old = await _db.GameSessions
+        // Remove any old session for this key using ExecuteDeleteAsync for performance
+        await _db.GameSessions
             .Where(s => s.SessionKey == sessionKey)
-            .ToListAsync();
-        _db.GameSessions.RemoveRange(old);
+            .ExecuteDeleteAsync();
 
         var session = new GameSession
         {

@@ -16,6 +16,8 @@ public class AppDbContext : DbContext
     // KosovaPOS Integration
     public DbSet<Business> Businesses => Set<Business>();
     public DbSet<PosSystem> PosSystems => Set<PosSystem>();
+    public DbSet<ProductItem> ProductItems => Set<ProductItem>();
+    public DbSet<POSOrder> POSOrders => Set<POSOrder>();
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
@@ -52,5 +54,7 @@ public class AppDbContext : DbContext
         });
 
         mb.Entity<PosSystem>(e => e.HasKey(x => x.Id));
+        mb.Entity<ProductItem>(e => e.HasKey(x => x.Id));
+        mb.Entity<POSOrder>(e => e.HasKey(x => x.Id));
     }
 }

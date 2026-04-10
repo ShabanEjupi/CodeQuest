@@ -153,3 +153,24 @@ public class PosSystem
     public string Theme { get; set; } = "Light";
     public DateTime InstalledAt { get; set; } = DateTime.UtcNow;
 }
+
+public class ProductItem
+{
+    public int Id { get; set; }
+    public string Barcode { get; set; } = "";
+    public string Name { get; set; } = "";
+    public decimal Price { get; set; }
+    public int PosSystemId { get; set; }
+    public PosSystem PosSystem { get; set; } = null!;
+    public string Category { get; set; } = "General"; // e.g. Pizza, Beverage, Clothing
+}
+
+public class POSOrder
+{
+    public int Id { get; set; }
+    public int PosSystemId { get; set; }
+    public PosSystem PosSystem { get; set; } = null!;
+    public decimal TotalAmount { get; set; }
+    public DateTime OrderDate { get; set; } = DateTime.UtcNow;
+    public string Status { get; set; } = "Completed";
+}
