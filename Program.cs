@@ -7,6 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ── Services ─────────────────────────────────────────────────────────
 builder.Services.AddControllersWithViews();
+builder.Services.AddOutputCache();
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+});
 builder.Services.AddMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -60,9 +65,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseResponseCompression();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseOutputCache();
 app.UseSession();
 app.UseAuthorization();
 
@@ -71,44 +78,53 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     if (db.Database.ProviderName != null && db.Database.ProviderName.Contains("Npgsql"))
-    {
-        try
-        {
-            var creator = db.Database.GetService<Microsoft.EntityFrameworkCore.Storage.IRelationalDatabaseCreator>();
-            try
-            {
-                if (!creator.Exists())
-                {
-                    creator.Create();
-                }
-            }
-            catch { /* Ignore database creation failures */ }
+     {
+         try
+         {
+             var creator = db.Database.GetService<Microsoft.EntityFrameworkCore.Storage.IRelationalDatabaseCreator>();
+             try
+             {
+                 if (!creator.Exists())
+                 {
+                     creator.Create();
+                 }
+             }
+             catch { /* Ignore database creation failures */ }
 
-            var connection = db.Database.GetDbConnection();
-            bool hasTables = false;
-            try
-            {
-                connection.Open();
-                using var command = connection.CreateCommand();
-                command.CommandText = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Chapters';";
-                var count = Convert.ToInt64(command.ExecuteScalar());
-                hasTables = count > 0;
-            }
-            finally
-            {
-                connection.Close();
-            }
+             try {
+                 // Apply any pending migrations to keep Supabase integration tables up to date
+                 db.Database.Migrate();
+             } 
+             catch { /* Ignore migration errors on start if they fail */ }
 
-            if (!hasTables)
-            {
-                creator.CreateTables();
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error initializing db: {ex.Message}");
-        }
-    }
+             var connection = db.Database.GetDbConnection();
+             bool hasTables = false;
+             try
+             {
+                 connection.Open();
+                 using var command = connection.CreateCommand();
+                 command.CommandText = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Chapters';";
+                 var count = Convert.ToInt64(command.ExecuteScalar());
+                 hasTables = count > 0;
+             }
+             finally
+             {
+                 connection.Close();
+             }
+
+             if (!hasTables)
+             {
+                 // In case migration was skipped or failed and database is empty
+                 try {
+                     creator.CreateTables();
+                 } catch { }
+             }
+         }
+         catch (Exception ex)
+         {
+             Console.WriteLine($"Error initializing db: {ex.Message}");
+         }
+     }
     else
     {
         db.Database.EnsureCreated();

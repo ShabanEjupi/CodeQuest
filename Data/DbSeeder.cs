@@ -291,5 +291,21 @@ public static class DbSeeder
             db.Chapters.AddRange(chapters);
             db.SaveChanges();
         }
+
+        // ── Seed KosovaPOS Business Data ──────────────────────────────────────
+        if (!db.Businesses.Any())
+        {
+            var b1 = new Business { Name = "Supermarket Meridian", BusinessType = "Supermarket", Address = "Dardania, Prishtinë", Phone = "044111222", TaxNumber = "810123456" };
+            var p1 = new PosSystem { Business = b1, Version = "3.1", SystemType = "Supermarket POS", FiscalPrinterEnabled = true, Theme = "Dark" };
+            db.Businesses.Add(b1);
+            db.PosSystems.Add(p1);
+
+            var b2 = new Business { Name = "Pizzeria Proper", BusinessType = "Pizzeria", Address = "Ulpiana, Prishtinë", Phone = "045333444", TaxNumber = "810654321" };
+            var p2 = new PosSystem { Business = b2, Version = "2.9", SystemType = "Pizzeria POS", FiscalPrinterEnabled = true, Theme = "Light" };
+            db.Businesses.Add(b2);
+            db.PosSystems.Add(p2);
+
+            db.SaveChanges();
+        }
     }
 }

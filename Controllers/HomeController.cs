@@ -11,17 +11,26 @@ public class HomeController : Controller
     public HomeController(ILeaderboardService leaderboard) =>
         _leaderboard = leaderboard;
 
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+    public async Task<IActionResult> CodeQuest()
     {
         var top = await _leaderboard.GetTopAsync(10);
         return View(top);
     }
 
+    public IActionResult Services() => View();
+    public IActionResult About() => View();
+    public IActionResult Contact() => View();
+
     [HttpPost]
     public IActionResult Start(StartGameViewModel vm)
     {
         if (string.IsNullOrWhiteSpace(vm.PlayerName))
-            return RedirectToAction("Index");
+            return RedirectToAction("CodeQuest");
 
         TempData["PlayerName"] = vm.PlayerName.Trim();
         TempData["Language"] = vm.Language;
