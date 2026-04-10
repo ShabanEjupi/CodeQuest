@@ -50,11 +50,18 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> SendContactMessage(string Name, string Email, string Message)
     {
-        await _emailService.SendContactMessageAsync(Name, Email, Message);
-        await _emailService.SendNoReplyEmailAsync(Email, "Thank you for contacting KOSOVAPOS", 
-            $"Hi {Name},<br/><br/>We have received your message and will get back to you shortly.<br/><br/>Best regards,<br/>KOSOVAPOS Team");
+        var isSq = System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq";
 
-        TempData["SuccessMessage"] = "Your message has been sent successfully!";
+        await _emailService.SendContactMessageAsync(Name, Email, Message, isSq);
+
+        string subject = isSq ? "Faleminderit që kontaktuat KOSOVAPOS" : "Thank you for contacting KOSOVAPOS";
+        string body = isSq 
+            ? $"Përshëndetje {Name},<br/><br/>Kemi pranuar mesazhin tuaj dhe do t'ju përgjigjemi së shpejti.<br/><br/>Të falat,<br/>Ekipi i KOSOVAPOS" 
+            : $"Hi {Name},<br/><br/>We have received your message and will get back to you shortly.<br/><br/>Best regards,<br/>KOSOVAPOS Team";
+
+        await _emailService.SendNoReplyEmailAsync(Email, subject, body, isSq);
+
+        TempData["SuccessMessage"] = isSq ? "Mesazhi juaj u dërgua me sukses!" : "Your message has been sent successfully!";
         return RedirectToAction("Contact");
     }
 

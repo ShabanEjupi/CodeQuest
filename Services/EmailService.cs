@@ -6,8 +6,8 @@ namespace CodeQuest.Services
 {
     public interface IEmailService
     {
-        Task SendNoReplyEmailAsync(string toEmail, string subject, string body);
-        Task SendContactMessageAsync(string fromName, string fromEmail, string message);
+        Task SendNoReplyEmailAsync(string toEmail, string subject, string body, bool isSq = false);
+        Task SendContactMessageAsync(string fromName, string fromEmail, string message, bool isSq = false);
     }
 
     public class EmailService : IEmailService
@@ -23,7 +23,7 @@ namespace CodeQuest.Services
             _smtpPass = pass.Replace(" ", "");
         }
 
-        public async Task SendNoReplyEmailAsync(string toEmail, string subject, string body)
+        public async Task SendNoReplyEmailAsync(string toEmail, string subject, string body, bool isSq = false)
         {
             if (string.IsNullOrEmpty(_smtpPass)) return;
 
@@ -36,7 +36,7 @@ namespace CodeQuest.Services
 
             var mailMessage = new MailMessage
             {
-                From = new MailAddress(_smtpUser, "KOSOVAPOS No-Reply"),
+                From = new MailAddress(_smtpUser, isSq ? "KOSOVAPOS Mos Kthe Përgjigje" : "KOSOVAPOS No-Reply"),
                 Subject = subject,
                 Body = body,
                 IsBodyHtml = true
@@ -46,7 +46,7 @@ namespace CodeQuest.Services
             await client.SendMailAsync(mailMessage);
         }
 
-        public async Task SendContactMessageAsync(string fromName, string fromEmail, string message)
+        public async Task SendContactMessageAsync(string fromName, string fromEmail, string message, bool isSq = false)
         {
             if (string.IsNullOrEmpty(_smtpPass)) return;
 
@@ -59,9 +59,11 @@ namespace CodeQuest.Services
 
             var mailMessage = new MailMessage
             {
-                From = new MailAddress(_smtpUser, "KOSOVAPOS Website Contact"),
-                Subject = $"New Contact Message from {fromName}",
-                Body = $"<b>Name:</b> {fromName}<br/><b>Email:</b> {fromEmail}<br/><br/><b>Message:</b><br/>{message}",
+                From = new MailAddress(_smtpUser, isSq ? "KOSOVAPOS Kontakt" : "KOSOVAPOS Website Contact"),
+                Subject = isSq ? $"Mesazh i Ri Kontakti nga {fromName}" : $"New Contact Message from {fromName}",
+                Body = isSq 
+                    ? $"<b>Emri:</b> {fromName}<br/><b>Email:</b> {fromEmail}<br/><br/><b>Mesazhi:</b><br/>{message}"
+                    : $"<b>Name:</b> {fromName}<br/><b>Email:</b> {fromEmail}<br/><br/><b>Message:</b><br/>{message}",
                 IsBodyHtml = true
             };
             // Send to ourselves

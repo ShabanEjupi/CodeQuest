@@ -1,35 +1,43 @@
 @model List<LeaderboardEntry>
 @{
-    ViewData["Title"] = "Home";
+    var isSq = System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq";
+    ViewData["Title"] = isSq ? "Simulatori i Trajnimit POS" : "CodeQuest";
 }
 
 <div class="hero">
     <div class="hero-inner">
-        <div class="hero-eyebrow">◈ Pizzeria & Supermarket Training Simulator</div>
-        <h1 class="hero-title">KOSOVAPOS CodeQuest</h1>
-        <p class="hero-sub">Point of Sale Integration Core</p>
+        <div class="hero-eyebrow">@(isSq ? "◈ Simulator Trajnimi për Pizeri & Supermarkete" : "◈ Pizzeria & Supermarket Training Simulator")</div>
+        <h1 class="hero-title">@(isSq ? "Simulatori i Trajnimit POS" : "CodeQuest")</h1>
+        <p class="hero-sub">@(isSq ? "Qendra e Integrimit të Pikës së Shitjes" : "Point of Sale Integration Core")</p>
         <p class="hero-desc">
-            Welcome to KOSOVAPOS, the ultimate system for pizzerias, clothing stores, and supermarkets. 
-            Master the underlying <strong>core coding concepts</strong> to manage business data, orders, and POS operations.
+            @(isSq 
+                ? Html.Raw("Mirësevini në KOSOVAPOS, sistemi përfundimtar për pizeri, dyqane rrobash dhe supermarkete. Mësoni rreth <strong>koncepteve thelbësore të kodimit</strong> për të menaxhuar të dhënat e biznesit, porositë dhe operacionet e pikës së shitjes (POS).")
+                : Html.Raw("Welcome to KOSOVAPOS, the ultimate system for pizzerias, clothing stores, and supermarkets. Master the underlying <strong>core coding concepts</strong> to manage business data, orders, and POS operations."))
         </p>
 
         <div class="concept-chips">
-            <span class="chip">Variables</span>
-            <span class="chip">Data Types</span>
-            <span class="chip">Conditionals</span>
-            <span class="chip">Loops</span>
-            <span class="chip">Functions</span>
-            <span class="chip">Lists</span>
-            <span class="chip">Dictionaries</span>
-            <span class="chip">Classes</span>
-            <span class="chip">Exceptions</span>
+            <span class="chip">@(isSq ? "Variablat" : "Variables")</span>
+            <span class="chip">@(isSq ? "Llojet e të Dhënave" : "Data Types")</span>
+            <span class="chip">@(isSq ? "Kushtet" : "Conditionals")</span>
+            <span class="chip">@(isSq ? "Unazat" : "Loops")</span>
+            <span class="chip">@(isSq ? "Funksionet" : "Functions")</span>
+            <span class="chip">@(isSq ? "Listat" : "Lists")</span>
+            <span class="chip">@(isSq ? "Fjalorët" : "Dictionaries")</span>
+            <span class="chip">@(isSq ? "Klasat" : "Classes")</span>
+            <span class="chip">@(isSq ? "Gabimet" : "Exceptions")</span>
+            <span class="chip">@(isSq ? "Asinkron/Prit" : "Async/Await")</span>
+            <span class="chip">@(isSq ? "API-të" : "APIs")</span>
+            <span class="chip">@(isSq ? "Bazat e të Dhënave" : "Databases")</span>
+            <span class="chip">@(isSq ? "Kontrolli i Versioneve" : "Version Control")</span>
+            <span class="chip">@(isSq ? "Trashëgimia" : "Inheritance")</span>
+            <span class="chip">@(isSq ? "Testimi i Njësive" : "Unit Testing")</span>
         </div>
 
         <form method="post" asp-controller="Home" asp-action="Start" class="start-form">
             <input type="text"
                    name="PlayerName"
                    class="name-input"
-                   placeholder="Enter your name, System Manager…"
+                   placeholder="@(isSq ? "Shënoni emrin tuaj, Menaxher i Sistemit…" : "Enter your name, System Manager…")"
                    maxlength="40"
                    autocomplete="off"
                    required />
@@ -37,7 +45,7 @@
                 <option value="en">English</option>
                 <option value="sq">Shqip</option>
             </select>
-            <button type="submit" class="btn-primary">Begin the Quest →</button>
+            <button type="submit" class="btn-primary">@(isSq ? "Fillo Sfidën →" : "Begin the Quest →")</button>
         </form>
     </div>
 
@@ -52,15 +60,15 @@
 @if (Model.Any())
 {
     <section class="home-leaderboard">
-        <h2 class="section-title">Top KOSOVAPOS Managers</h2>
+        <h2 class="section-title">@(isSq ? "Menaxherët më të mirë të KOSOVAPOS" : "Top KOSOVAPOS Managers")</h2>
         <table class="lb-table">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Score</th>
-                    <th>Correct</th>
-                    <th>Rank</th>
+                    <th>@(isSq ? "Emri" : "Name")</th>
+                    <th>@(isSq ? "Pikët" : "Score")</th>
+                    <th>@(isSq ? "Të Sakta" : "Correct")</th>
+                    <th>@(isSq ? "Rangu" : "Rank")</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,6 +85,7 @@
                 }
             </tbody>
         </table>
-        <a asp-controller="Game" asp-action="Leaderboard" class="lb-link">View full leaderboard →</a>
+        <a asp-controller="Game" asp-action="Leaderboard" class="lb-link">@(isSq ? "Shiko të gjithë liderët →" : "View full leaderboard →")</a>
     </section>
 }
+

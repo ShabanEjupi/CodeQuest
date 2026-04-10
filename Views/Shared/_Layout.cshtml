@@ -22,7 +22,7 @@
             <a asp-controller="Home" asp-action="Services">@(System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq" ? "Shërbimet" : "Services")</a>
             <a asp-controller="Home" asp-action="About">@(System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq" ? "Rreth Nesh" : "About Us")</a>
             <a asp-controller="Home" asp-action="Contact">@(System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq" ? "Kontakt" : "Contact")</a>
-            <a asp-controller="Home" asp-action="CodeQuest">CodeQuest</a>
+            <a asp-controller="Home" asp-action="CodeQuest">@(System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq" ? "Simulatori i Trajnimit POS" : "CodeQuest")</a>
             <a asp-controller="Game" asp-action="Leaderboard">@(System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq" ? "Liderët" : "Leaderboard")</a>
 
             <form id="langForm" asp-controller="Home" asp-action="SetLanguage" method="post" style="display:inline-block; margin-left: 15px;">
