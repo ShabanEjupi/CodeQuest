@@ -25,7 +25,7 @@ if (rawConnString.StartsWith("postgres://") || rawConnString.StartsWith("postgre
     var uri = new Uri(rawConnString);
     var userInfo = uri.UserInfo.Split(':');
     var password = userInfo.Length > 1 ? userInfo[1] : "";
-    connectionString = $"Host={uri.Host};Port={(uri.Port > 0 ? uri.Port : 5432)};Database={uri.LocalPath.TrimStart('/')};Username={userInfo[0]};Password={password};Ssl Mode=Require;Trust Server Certificate=true";
+    connectionString = $"Host={uri.Host};Port={(uri.Port > 0 ? uri.Port : 5432)};Database={uri.LocalPath.TrimStart('/')};Username={userInfo[0]};Password={password};Ssl Mode=Require;Trust Server Certificate=true;Pooling=false;";
 }
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -45,6 +45,12 @@ builder.Services.AddScoped<IGameSessionService, GameSessionService>();
 builder.Services.AddScoped<ILeaderboardService, LeaderboardService>();
 
 var app = builder.Build();
+
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+    app.Urls.Add($"http://*:{port}");
+}
 
 // ── Middleware ────────────────────────────────────────────────────────
 if (!app.Environment.IsDevelopment())
@@ -68,19 +74,13 @@ using (var scope = app.Services.CreateScope())
         try
         {
             var creator = db.Database.GetService<Microsoft.EntityFrameworkCore.Storage.IRelationalDatabaseCreator>();
-            var script = creator.GenerateCreateScript();
-            var commands = script.Split(';', StringSplitOptions.RemoveEmptyEntries);
-            foreach (var command in commands)
+            if (!creator.Exists())
             {
-                if (string.IsNullOrWhiteSpace(command)) continue;
-                try
-                {
-                    db.Database.ExecuteSqlRaw(command);
-                }
-                catch
-                {
-                    // Ignore if tables/indexes already exist
-                }
+                creator.Create();
+            }
+            if (!creator.HasTables())
+            {
+                creator.CreateTables();
             }
         }
         catch (Exception ex)
