@@ -25,10 +25,10 @@ if (rawConnString.StartsWith("postgres://") || rawConnString.StartsWith("postgre
     var uri = new Uri(rawConnString);
     var userInfo = uri.UserInfo.Split(':');
     var password = userInfo.Length > 1 ? userInfo[1] : "";
-    connectionString = $"Host={uri.Host};Port={(uri.Port > 0 ? uri.Port : 5432)};Database={uri.LocalPath.TrimStart('/')};Username={userInfo[0]};Password={password};Ssl Mode=Require;Trust Server Certificate=true;Pooling=false;";
+    connectionString = $"Host={uri.Host};Port={(uri.Port > 0 ? uri.Port : 5432)};Database={uri.LocalPath.TrimStart('/')};Username={userInfo[0]};Password={password};Ssl Mode=Require;Trust Server Certificate=true;Pooling=true;";
 }
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContextPool<AppDbContext>(options =>
 {
     if (connectionString.Contains("codequest.db"))
     {
