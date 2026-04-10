@@ -74,11 +74,31 @@ using (var scope = app.Services.CreateScope())
         try
         {
             var creator = db.Database.GetService<Microsoft.EntityFrameworkCore.Storage.IRelationalDatabaseCreator>();
-            if (!creator.Exists())
+            try
             {
-                creator.Create();
+                if (!creator.Exists())
+                {
+                    creator.Create();
+                }
             }
-            if (!creator.HasTables())
+            catch { /* Ignore database creation failures */ }
+
+            var connection = db.Database.GetDbConnection();
+            bool hasTables = false;
+            try
+            {
+                connection.Open();
+                using var command = connection.CreateCommand();
+                command.CommandText = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Chapters';";
+                var count = Convert.ToInt64(command.ExecuteScalar());
+                hasTables = count > 0;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            if (!hasTables)
             {
                 creator.CreateTables();
             }
@@ -92,7 +112,15 @@ using (var scope = app.Services.CreateScope())
     {
         db.Database.EnsureCreated();
     }
-    DbSeeder.Seed(db);
+
+    try
+    {
+        DbSeeder.Seed(db);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error seeding db: {ex.Message}");
+    }
 }
 
 // ── Routes ────────────────────────────────────────────────────────────
