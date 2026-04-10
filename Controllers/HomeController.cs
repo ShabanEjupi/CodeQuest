@@ -73,6 +73,7 @@ public class HomeController : Controller
 
         TempData["PlayerName"] = vm.PlayerName.Trim();
         TempData["Language"] = vm.Language;
+        TempData["GameType"] = vm.GameType;
         return RedirectToAction("Begin", "Game");
     }
 

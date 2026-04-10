@@ -9,6 +9,7 @@ public class Chapter
     public string Language { get; set; } = "en";
     public string Label { get; set; } = "";
     public string Concept { get; set; } = "";
+    public string GameType { get; set; } = "Coding"; // "Coding" or "POS"
     public string StoryHtml { get; set; } = "";
     public string CodeHtml { get; set; } = "";
     public string QuizPrompt { get; set; } = "";
@@ -36,6 +37,7 @@ public class GameSession
     public string SessionKey { get; set; } = "";       // ties to ASP.NET session
     public string PlayerName { get; set; } = "";
     public string Language { get; set; } = "en";
+    public string GameType { get; set; } = "Coding"; // "Coding" or "POS"
     public int CurrentChapterIndex { get; set; } = 0;
     public int Score { get; set; } = 0;
     public int CorrectAnswers { get; set; } = 0;
@@ -83,6 +85,7 @@ public class StartGameViewModel
 {
     public string PlayerName { get; set; } = "";
     public string Language { get; set; } = "en";
+    public string GameType { get; set; } = "Coding"; // "Coding" or "POS"
 }
 
 public class ChapterViewModel

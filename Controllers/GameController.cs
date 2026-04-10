@@ -27,6 +27,8 @@ public class GameController : Controller
     {
         var playerName = TempData["PlayerName"]?.ToString();
         var language = TempData["Language"]?.ToString() ?? "en";
+        var gameType = TempData["GameType"]?.ToString() ?? "Coding";
+
         if (string.IsNullOrWhiteSpace(playerName))
             return RedirectToAction("Index", "Home");
 
@@ -34,7 +36,7 @@ public class GameController : Controller
         var sessionKey = Guid.NewGuid().ToString();
         HttpContext.Session.SetString(SessionKeyName, sessionKey);
 
-        await _sessions.CreateAsync(sessionKey, playerName, language);
+        await _sessions.CreateAsync(sessionKey, playerName, language, gameType);
         return RedirectToAction("Play");
     }
 
@@ -49,8 +51,8 @@ public class GameController : Controller
         if (session == null)
             return RedirectToAction("Result");
 
-        var total   = await _chapters.GetTotalCountAsync(session.Language);
-        var chapter = await _chapters.GetByIndexAsync(session.CurrentChapterIndex, session.Language);
+        var total   = await _chapters.GetTotalCountAsync(session.Language, session.GameType);
+        var chapter = await _chapters.GetByIndexAsync(session.CurrentChapterIndex, session.Language, session.GameType);
 
         if (chapter == null)
             return RedirectToAction("Result");
@@ -79,7 +81,7 @@ public class GameController : Controller
         if (session == null)
              return Json(new { error = "no session" });
 
-        var total  = await _chapters.GetTotalCountAsync(session.Language);
+        var total  = await _chapters.GetTotalCountAsync(session.Language, session.GameType);
         var result = await _sessions.SubmitAnswerAsync(sessionKey, choiceId, total);
 
         return Json(result);
@@ -102,7 +104,7 @@ public class GameController : Controller
         // Record to leaderboard
         await _leaderboard.RecordAsync(session);
 
-        var allChapters = await _chapters.GetAllAsync(session.Language);
+        var allChapters = await _chapters.GetAllAsync(session.Language, session.GameType);
         var details     = new List<ChapterResultDetail>();
 
         foreach (var ch in allChapters)

@@ -6,7 +6,7 @@ namespace CodeQuest.Services;
 
 public interface IGameSessionService
 {
-    Task<GameSession> CreateAsync(string sessionKey, string playerName, string language);
+    Task<GameSession> CreateAsync(string sessionKey, string playerName, string language, string gameType);
     Task<GameSession?> GetActiveAsync(string sessionKey);
     Task<AnswerResultViewModel> SubmitAnswerAsync(string sessionKey, int choiceId, int totalChapters);
     Task<GameSession?> GetCompletedAsync(string sessionKey);
@@ -18,7 +18,7 @@ public class GameSessionService : IGameSessionService
 
     public GameSessionService(AppDbContext db) => _db = db;
 
-    public async Task<GameSession> CreateAsync(string sessionKey, string playerName, string language)
+    public async Task<GameSession> CreateAsync(string sessionKey, string playerName, string language, string gameType)
     {
         // Remove any old session for this key using ExecuteDeleteAsync for performance
         await _db.GameSessions
@@ -30,6 +30,7 @@ public class GameSessionService : IGameSessionService
             SessionKey   = sessionKey,
             PlayerName   = playerName,
             Language     = language,
+            GameType     = gameType,
             StartedAt    = DateTime.UtcNow
         };
         _db.GameSessions.Add(session);

@@ -6,7 +6,7 @@ public static class DbSeeder
 {
     public static void Seed(AppDbContext db)
     {
-        var existingKeys = db.Chapters.Select(c => c.Language + "_" + c.Concept).ToHashSet();
+        var existingKeys = db.Chapters.Select(c => c.Language + "_" + c.GameType + "_" + c.Concept).ToHashSet();
         var chapters = new List<Chapter>();
 
         // EN & SQ helper to create bilingual chapters easily
@@ -14,18 +14,19 @@ public static class DbSeeder
             string enLabel, string enStory, string enCode, string enPrompt, string enOk, string enBad,
             string sqLabel, string sqStory, string sqCode, string sqPrompt, string sqOk, string sqBad,
             (string text, bool ok)[] enChoices,
-            (string text, bool ok)[] sqChoices)
+            (string text, bool ok)[] sqChoices,
+            string gameType = "Coding")
         {
-            if (!existingKeys.Contains("en_" + concept))
+            if (!existingKeys.Contains("en_" + gameType + "_" + concept))
             {
-                var cEn = new Chapter { Language = "en", OrderIndex = order, Concept = concept, Label = enLabel, StoryHtml = enStory, CodeHtml = enCode, QuizPrompt = enPrompt, OkFeedback = enOk, BadFeedback = enBad };
+                var cEn = new Chapter { Language = "en", GameType = gameType, OrderIndex = order, Concept = concept, Label = enLabel, StoryHtml = enStory, CodeHtml = enCode, QuizPrompt = enPrompt, OkFeedback = enOk, BadFeedback = enBad };
                 for (int i=0; i<enChoices.Length; i++) cEn.Choices.Add(new Choice { Text = enChoices[i].text, IsCorrect = enChoices[i].ok, OrderIndex = i });
                 chapters.Add(cEn);
             }
 
-            if (!existingKeys.Contains("sq_" + concept))
+            if (!existingKeys.Contains("sq_" + gameType + "_" + concept))
             {
-                var cSq = new Chapter { Language = "sq", OrderIndex = order, Concept = concept, Label = sqLabel, StoryHtml = sqStory, CodeHtml = sqCode, QuizPrompt = sqPrompt, OkFeedback = sqOk, BadFeedback = sqBad };
+                var cSq = new Chapter { Language = "sq", GameType = gameType, OrderIndex = order, Concept = concept, Label = sqLabel, StoryHtml = sqStory, CodeHtml = sqCode, QuizPrompt = sqPrompt, OkFeedback = sqOk, BadFeedback = sqBad };
                 for (int i=0; i<sqChoices.Length; i++) cSq.Choices.Add(new Choice { Text = sqChoices[i].text, IsCorrect = sqChoices[i].ok, OrderIndex = i });
                 chapters.Add(cSq);
             }
@@ -285,6 +286,119 @@ public static class DbSeeder
             "✗ Testimet e njësisë kontrollojnë nëse kodi punon siç pritet.",
             new[] { ("To test individual components of the code", true), ("To increase application size", false), ("To translate code to English", false), ("To style text on a webpage", false) },
             new[] { ("Për të testuar komponentë të veçantë të kodit", true), ("Për të rritur madhësinë e aplikacionit", false), ("Për të përkthyer kodin në anglisht", false), ("Për të stiluar tekstin", false) });
+
+        // POS Chapters
+        AddChapter(0, "IntroPOS",
+            "Chapter 1 · The POS Interface",
+            "<p>Welcome to <strong>KosovaPOS</strong>! You are starting your shift. First, what does POS stand for and why is it essential for any retail business?</p><img src='/img/pos_intro.png' alt='POS Intro' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "--- Starting POS System ---",
+            "What does POS stand for?",
+            "✓ Correct! It is the Point of Sale.",
+            "✗ Think about where a sale happens.",
+            "Kapitulli 1 · Ndërfaqja e POS",
+            "<p>Mirësevini në <strong>KosovaPOS</strong>! Po fillon ndërrimin tuaj. Së pari, çfarë do të thotë POS dhe pse është thelbësor?</p><img src='/img/pos_intro.png' alt='POS Intro' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "--- Nisja e POS ---",
+            "Çfarë do të thotë POS?",
+            "✓ Saktë! Do të thotë Pika e Shitjes.",
+            "✗ Mendo ku ndodh shitja.",
+            new[] { ("Point of Sale", true), ("Proof of System", false), ("Part of Store", false), ("Point of Service", false) },
+            new[] { ("Pika e Shitjes (Point of Sale)", true), ("Provë e Sistemit", false), ("Pjesë e Dyqanit", false), ("Pikë Shërbimi", false) }, "POS");
+
+        AddChapter(1, "FiscalPrinter",
+            "Chapter 2 · The Fiscal Printer",
+            "<p>In the Republic of Kosova, every sale must go through a <strong>Fiscal Printer</strong> (Arka Fiskale) certified by ATK (Administrata Tatimore e Kosovës).</p><img src='/img/fiscal_printer.png' alt='Fiscal Printer' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "--- Fiscal Printer Connection: OK ---",
+            "Why do we need a Fiscal Printer?",
+            "✓ Yes! It ensures sales are reported and taxes are paid.",
+            "✗ It's required by law for tax recording.",
+            "Kapitulli 2 · Arka Fiskale",
+            "<p>Në Republikën e Kosovës, çdo shitje duhet të kalojë përmes një <strong>Arke Fiskale</strong> të certifikuar nga ATK-ja.</p><img src='/img/fiscal_printer.png' alt='Arka Fiskale' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "--- Lidhja me Arkën Fiskale: OK ---",
+            "Pse përdorim Arkën Fiskale?",
+            "✓ Saktë! Raporton shitjet tek ATK-ja.",
+            "✗ Është e domosdoshme ligjërisht.",
+            new[] { ("To record sales for the Tax Administration (ATK)", true), ("To print nicer receipts", false), ("To run the internet", false), ("To hold cash safely", false) },
+            new[] { ("Për të raportuar shitjet tek Administrata Tatimore (ATK)", true), ("Për të printuar kuponë më të bukur", false), ("Për internet", false), ("Për të mbajtur paratë", false) }, "POS");
+
+        AddChapter(2, "Barcode",
+            "Chapter 3 · Barcodes & Products",
+            "<p>Let's scan our first product! A barcode scanner reads the EAN/UPC code to find the exact item in our KosovaPOS database.</p><img src='/img/barcode_scanner.png' alt='Scanner' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "SCAN: 3830001234567 -> Found: 'Ujë Mineral 0.5L'",
+            "What does the scanner actually scan?",
+            "✓ Correct, the barcode translates into a unique ID.",
+            "✗ It reads the barcode.",
+            "Kapitulli 3 · Barkodet",
+            "<p>Le të skanojmë produktin e parë! Skaneri lexon kodin EAN/UPC për të gjetur artikullin thelbësor.</p><img src='/img/barcode_scanner.png' alt='Scanner' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "SKANIM: 3830001234567 -> Gjetur: 'Ujë Mineral 0.5L'",
+            "Çfarë lexon saktësisht skaneri?",
+            "✓ Saktë, barkodi përfaqëson një ID unike.",
+            "✗ Lexon barkodin e produktit.",
+            new[] { ("The unique barcode (EAN/UPC)", true), ("The ingredients", false), ("The expiration date", false), ("The business tax number", false) },
+            new[] { ("Barkodin unik (EAN/UPC)", true), ("Përbërësit", false), ("Datën e skadencës", false), ("Numrin fiskal të biznesit", false) }, "POS");
+
+        AddChapter(3, "VAT",
+            "Chapter 4 · Value Added Tax (VAT / TVSH)",
+            "<p>In Kosovo, standard VAT (TVSH) is 18%, while for essential items and utilities it might be 8%. The POS calculates this automatically before printing the fiscal receipt.</p>",
+            "Price: 10.00 EUR | TVSH (18%): 1.53 EUR",
+            "What is the standard VAT (TVSH) rate in Kosovo for most items?",
+            "✓ Spot on! 18% is the standard rate.",
+            "✗ The standard rate is 18%.",
+            "Kapitulli 4 · TVSH",
+            "<p>Në Kosovë, TVSH-ja standarde është 18%, ndërsa për produkte esenciale 8%. Sistemi i llogarit këtë automatikisht.</p>",
+            "Çmimi: 10.00 EUR | TVSH (18%): 1.53 EUR",
+            "Sa është norma standarde e TVSH-së në Kosovë?",
+            "✓ Saktë! 18% është norma standarde.",
+            "✗ 18% është përgjigja korrekte.",
+            new[] { ("18%", true), ("8%", false), ("20%", false), ("10%", false) },
+            new[] { ("18%", true), ("8%", false), ("20%", false), ("10%", false) }, "POS");
+
+        AddChapter(4, "PaymentMethods",
+            "Chapter 5 · Payment Methods",
+            "<p>A customer wants to pay for their order. You can accept Cash, Credit/Debit Card, or Mobile Payments. In the fiscal receipt, the payment method must be clearly marked.</p><img src='/img/pos_payment.png' alt='Payment' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "Total: 15.50 EUR. Pay with: [CASH] [CARD]",
+            "Why does the payment type matter for the fiscal printer?",
+            "✓ Yes, ATK requires tracking of cash vs. electronic payments.",
+            "✗ It matters for accounting and tax declaring.",
+            "Kapitulli 5 · Kthimi i Kusurit",
+            "<p>Klienti po paguan. Mund të pranoni Para të Gatshme (Cash) ose Kartelë. Lloji i pagesës printohet theksueshëm në kuponin fiskal.</p><img src='/img/pos_payment.png' alt='Payment' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "Total: 15.50 EUR. Paguaj me: [CASH] [KARTELË]",
+            "Pse duhet specifikuar metoda e pagesës në arkë fiskale?",
+            "✓ Kështu Administrata Tatimore e di saktë si janë marrë paratë.",
+            "✗ Është për raportim të saktë.",
+            new[] { ("It must match the daily closing statement for taxes (Z-Report)", true), ("To change the product price", false), ("So the cash drawer opens slower", false), ("It does not matter", false) },
+            new[] { ("Duhet të përputhet me mbylljen ditore për ATK-në (Raporti Z)", true), ("Për të ndryshuar çmimin", false), ("Që të hapet arka më ngadalë", false), ("Nuk ka rëndësi", false) }, "POS");
+
+        AddChapter(5, "ZReport",
+            "Chapter 6 · The Z-Report",
+            "<p>At the end of your shift, you must close the register. This prints a <strong>Z-Report</strong> (Raporti Z) from the fiscal printer, summarizing all sales, taxes, and money received.</p>",
+            "--- PRINTING Z-REPORT ---",
+            "What is a Z-Report?",
+            "✓ Correct! It is the mandatory daily closure report.",
+            "✗ The Z-Report is for daily closing.",
+            "Kapitulli 6 · Raporti Z",
+            "<p>Në fund të ndërrimit tuaj për ditën e punës, duhet mbyllur arka. Kjo printon një <strong>Raport Z</strong> nga arka fiskale, që tregon të gjitha shitjet, TVSH-të dhe paratë e gatshme.</p>",
+            "--- PRINTIMI I RAPORTIT Z ---",
+            "Çfarë është Raporti Z?",
+            "✓ Saktesisht. Është mbyllja obligative ditore.",
+            "✗ Është raporti i mbylljes ditore.",
+            new[] { ("A daily financial summary required by ATK to close the registry", true), ("A report of only returned items", false), ("Inventory breakdown", false), ("A maintenance ticket", false) },
+            new[] { ("Një përmbledhje ditore financiare që kërkohet nga ATK", true), ("Një raport vetëm për kthimet", false), ("Lista e inventarit", false), ("Një biletë mirëmbajtjeje", false) }, "POS");
+
+        AddChapter(6, "Returns",
+            "Chapter 7 · Handling Returns (Storno)",
+            "<p>Sometimes customers return products. In POS, you perform a Return or Storno. For fiscal reasons, the original receipt must be matched.</p>",
+            "ACTION: Storno | Receipt #1045",
+            "What must you typically do when a customer returns a purchased item in Kosovo?",
+            "✓ Yes! You issue a specific return fiscal receipt or record the storno officially.",
+            "✗ You must register it in the POS to balance the books.",
+            "Kapitulli 7 · Kthimet (Storno)",
+            "<p>Ndonjëherë klientët kthejnë produkte. Në sistemin POS, bëhet Storno. Për rregulla fiskale, duhet të keni kuponin e origjinës.</p>",
+            "VEPRIM: Storno | Kuponi #1045",
+            "Çfarë bëhet gjatë kthimit të produktit me para?",
+            "✓ Saktë! Duhet të lëshohet kupon kthimi dhe të përditësohet stoku.",
+            "✗ Duhet regjistruar kthimin zyrtarisht në KosovaPOS.",
+            new[] { ("Process it through POS to print a return fiscal receipt & update stock", true), ("Trash the original receipt and give hidden cash back", false), ("Nothing, returns aren't allowed", false), ("Ignore VAT changes", false) },
+            new[] { ("Kalohet në POS për kupon të kthimit & përditësim të depose/stokut", true), ("Hidhni kuponin dhe kthe paratë fshehurazi", false), ("Asgjë, nuk lejohen", false), ("Injorohenndryshimet e TVSH-së", false) }, "POS");
 
         if (chapters.Any())
         {
