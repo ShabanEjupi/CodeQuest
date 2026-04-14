@@ -1,30 +1,31 @@
 @{
-    ViewData["Title"] = "FAQ";
+    var isSq = System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq";
+    ViewData["Title"] = isSq ? "Pyetjet" : "FAQ";
 }
 
 <div class="hero">
-    <h1 class="hero-title">Frequently Asked Questions</h1>
-    <p class="hero-desc">Got questions about the KOSOVAPOS Training Simulator? We have answers.</p>
+    <h1 class="hero-title">@(isSq ? "Pyetjet e Bëra Më Shpesh" : "Frequently Asked Questions")</h1>
+    <p class="hero-desc">@(isSq ? "Keni pyetje për Simulatorin e Trajnimit KOSOVAPOS? Ne kemi përgjigjet." : "Got questions about the KOSOVAPOS Training Simulator? We have answers.")</p>
 </div>
 
 <div class="faq-section">
     <div class="faq-item">
-        <h3>What is KOSOVAPOS?</h3>
-        <p>KOSOVAPOS is an advanced Point of Sale training simulator designed to help cashiers and store managers learn the ropes before touching a real register.</p>
+        <h3>@(isSq ? "Çfarë është KOSOVAPOS?" : "What is KOSOVAPOS?")</h3>
+        <p>@(isSq ? "KOSOVAPOS është një simulator i avancuar i trajnimit të Pikes së Shitjes, i dizajnuar për t'i ndihmuar arkëtarët dhe menaxherët e dyqaneve të mësojnë bazat përpara se të prekin një regjistër real." : "KOSOVAPOS is an advanced Point of Sale training simulator designed to help cashiers and store managers learn the ropes before touching a real register.")</p>
     </div>
     
     <div class="faq-item">
-        <h3>Is it really a game?</h3>
-        <p>Yes, we gamified the learning process so you can level up your POS skills interactively and compete on the leaderboard.</p>
+        <h3>@(isSq ? "A është vërtet një lojë?" : "Is it really a game?")</h3>
+        <p>@(isSq ? "Po, ne e kemi bërë procesin e të mësuarit si lojë, kështu që ju mund të ngrisni aftësitë tuaja të POS në mënyrë interaktive dhe të konkurroni në tabelën e liderëve." : "Yes, we gamified the learning process so you can level up your POS skills interactively and compete on the leaderboard.")</p>
     </div>
 
     <div class="faq-item">
-        <h3>How much does it cost?</h3>
-        <p>Check out our Pricing page for more details. We have different tiers depending on your team's size.</p>
+        <h3>@(isSq ? "Sa kushton?" : "How much does it cost?")</h3>
+        <p>@(isSq ? "Shikoni faqen tonë të Çmimeve për më shumë detaje. Ne kemi nivele të ndryshme në varësi të madhësisë së ekipit tuaj." : "Check out our Pricing page for more details. We have different tiers depending on your team's size.")</p>
     </div>
     
     <div class="faq-item">
-        <h3>Do I need special hardware?</h3>
-        <p>No special hardware required! KOSOVAPOS runs perfectly in any modern desktop or mobile browser.</p>
+        <h3>@(isSq ? "A më duhet harduer i veçantë?" : "Do I need special hardware?")</h3>
+        <p>@(isSq ? "Nuk kërkohet asnjë lloj hardueri i veçantë! KOSOVAPOS funksionon në mënyrë të përsosur në çdo shfletues modern, për desktop apo mobile." : "No special hardware required! KOSOVAPOS runs perfectly in any modern desktop or mobile browser.")</p>
     </div>
 </div>

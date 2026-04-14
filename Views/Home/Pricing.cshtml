@@ -1,35 +1,36 @@
 @{
-    ViewData["Title"] = "Pricing";
+    var isSq = System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq";
+    ViewData["Title"] = isSq ? "Çmimet" : "Pricing";
 }
 
 <div class="hero">
-    <h1 class="hero-title">Pricing Plans</h1>
-    <p class="hero-desc">Choose the KOSOVAPOS plan that powers your retail team.</p>
+    <h1 class="hero-title">@(isSq ? "Planet e Çmimeve" : "Pricing Plans")</h1>
+    <p class="hero-desc">@(isSq ? "Zgjidhni planin KOSOVAPOS që fuqizon ekipin tuaj të shitjes me pakicë." : "Choose the KOSOVAPOS plan that powers your retail team.")</p>
 </div>
 
 <div class="pricing-cards">
     <div class="pricing-card">
         <h3>Starter</h3>
         <p class="price">$19<span>/mo</span></p>
-        <p class="pricing-desc">Perfect for small businesses starting their digital journey.</p>
+        <p class="pricing-desc">@(isSq ? "E përkryer për bizneset e vogla që fillojnë udhëtimin e tyre dixhital." : "Perfect for small businesses starting their digital journey.")</p>
         <ul>
-            <li>✔ Up to 5 Users</li>
-            <li>✔ Basic Modules</li>
-            <li>✔ Standard Support</li>
+            <li>✔ @(isSq ? "Deri në 5 Përdorues" : "Up to 5 Users")</li>
+            <li>✔ @(isSq ? "Modulet Bazë" : "Basic Modules")</li>
+            <li>✔ @(isSq ? "Mbështetje Standarde" : "Standard Support")</li>
         </ul>
-        <a asp-controller="Home" asp-action="Contact" class="btn-ghost">Get Started</a>
+        <a asp-controller="Home" asp-action="Contact" class="btn-ghost">@(isSq ? "Fillo Tani" : "Get Started")</a>
     </div>
 
     <div class="pricing-card popular">
-        <div class="popular-badge">Most Popular</div>
+        <div class="popular-badge">@(isSq ? "Më i Popullarizuari" : "Most Popular")</div>
         <h3>Professional</h3>
         <p class="price">$49<span>/mo</span></p>
-        <p class="pricing-desc">Advanced features to supercharge your cashiers.</p>
+        <p class="pricing-desc">@(isSq ? "Funksione të avancuara për të super-fuqizuar arkëtarët tuaj." : "Advanced features to supercharge your cashiers.")</p>
         <ul>
-            <li>✔ Up to 25 Users</li>
-            <li>✔ All Advanced Modules</li>
-            <li>✔ Live Leaderboards</li>
-            <li>✔ Priority Support</li>
+            <li>✔ @(isSq ? "Deri në 25 Përdorues" : "Up to 25 Users")</li>
+            <li>✔ @(isSq ? "Të gjitha Modulet e Avancuara" : "All Advanced Modules")</li>
+            <li>✔ @(isSq ? "Liderbordet Live" : "Live Leaderboards")</li>
+            <li>✔ @(isSq ? "Mbështetje Prioritare" : "Priority Support")</li>
         </ul>
         <a asp-controller="Home" asp-action="Contact" class="btn-primary">Get Pro</a>
     </div>
@@ -37,13 +38,13 @@
     <div class="pricing-card">
         <h3>Enterprise</h3>
         <p class="price">Custom</p>
-        <p class="pricing-desc">For large retail chains needing heavy customization.</p>
+        <p class="pricing-desc">@(isSq ? "Për rrjetet e mëdha të shitjes me pakicë që kanë nevojë për personalizim masiv." : "For large retail chains needing heavy customization.")</p>
         <ul>
-            <li>✔ Unlimited Users</li>
-            <li>✔ Custom Training Modules</li>
+            <li>✔ @(isSq ? "Përdorues të Pakufizuar" : "Unlimited Users")</li>
+            <li>✔ @(isSq ? "Module Trajnimi të Personalizuara" : "Custom Training Modules")</li>
             <li>✔ API Access</li>
-            <li>✔ Dedicated Manager</li>
+            <li>✔ @(isSq ? "Menaxher i Dedikuar" : "Dedicated Manager")</li>
         </ul>
-        <a asp-controller="Home" asp-action="Contact" class="btn-ghost">Contact Us</a>
+        <a asp-controller="Home" asp-action="Contact" class="btn-ghost">@(isSq ? "Na Kontaktoni" : "Contact Us")</a>
     </div>
 </div>

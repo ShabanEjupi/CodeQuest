@@ -1,0 +1,65 @@
+@{
+    var isSq = System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq";
+    ViewData["Title"] = isSq ? "Karriera" : "Careers";
+}
+
+<div class="hero">
+    <div class="hero-inner" style="max-width: 800px; margin: auto;">
+        <h1 class="hero-title">@(isSq ? "Bashkohuni me Ne" : "Join Us")</h1>
+        <p class="hero-sub" style="margin-bottom: 20px;">
+            @(isSq ? "KOSOVAPOS është në kërkim të talenteve" : "KOSOVAPOS is looking for top talent")
+        </p>
+
+        <p class="hero-desc" style="font-size: 1.1em; line-height: 1.6; text-align: left; background: rgba(0,0,0,0.3); padding: 30px; border-radius: 8px;">
+            @(isSq ? "Përdorini aftësitë tuaja teknike dhe dizajnerë për të transformuar ndërmarrjet anembanë Kosovës dhe rajonit. Ne vlerësojmë kreativitetin, pasionin për inxhinieri dhe dëshirën për të mësuar." : "Apply your technical and design skills to transform businesses across Kosova and the region. We value creativity, engineering passion, and a desire to learn.")
+        </p>
+
+        <h3 style="margin-top: 40px; margin-bottom: 20px; color: var(--accent-green); text-align: left;">
+            @(isSq ? "Pozitat e Hapura" : "Open Positions")
+        </h3>
+
+        <div style="display: flex; flex-direction: column; gap: 20px; text-align: left;">
+            <!-- Job 1 -->
+            <div class="home-section-box" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--accent-blue);">
+                <div>
+                    <h4 style="font-size: 1.25em; margin-bottom: 5px;">.NET Backend Engineer</h4>
+                    <span class="chip" style="background: rgba(56,189,248,0.1); color: var(--accent-blue);">Prishtinë / Hibrid</span>
+                    <span class="chip" style="background: rgba(255,255,255,0.05); color: var(--text-muted); border: none;">Full-Time</span>
+                </div>
+                <a href="mailto:etinup1@gmail.com" class="btn-ghost">
+                    @(isSq ? "Apliko" : "Apply Now")
+                </a>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="home-section-box" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--accent-purple);">
+                <div>
+                    <h4 style="font-size: 1.25em; margin-bottom: 5px;">Frontend Web Developer (React & Blazor)</h4>
+                    <span class="chip" style="background: rgba(167,139,250,0.1); color: var(--accent-purple);">Prishtinë / Hibrid</span>
+                    <span class="chip" style="background: rgba(255,255,255,0.05); color: var(--text-muted); border: none;">Full-Time</span>
+                </div>
+                <a href="mailto:etinup1@gmail.com" class="btn-ghost">
+                    @(isSq ? "Apliko" : "Apply Now")
+                </a>
+            </div>
+
+            <!-- Job 3 -->
+            <div class="home-section-box" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--accent-red);">
+                <div>
+                    <h4 style="font-size: 1.25em; margin-bottom: 5px;">UX/UI Designer</h4>
+                    <span class="chip" style="background: rgba(244,63,94,0.1); color: var(--accent-red);">Prishtinë / Remote</span>
+                    <span class="chip" style="background: rgba(255,255,255,0.05); color: var(--text-muted); border: none;">Part-Time</span>
+                </div>
+                <a href="mailto:etinup1@gmail.com" class="btn-ghost">
+                    @(isSq ? "Apliko" : "Apply Now")
+                </a>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <p style="color: var(--text-muted);">
+                @(isSq ? "Nuk e shihni pozicionin tuaj të idealit? Dërgoni CV tuaj në" : "Don't see your ideal role? Send your CV to") <strong>etinup1@gmail.com</strong> @(isSq ? "dhe ne do ta mbajmë për pozita të ardhshme." : "and we'll hold it for future openings.")
+            </p>
+        </div>
+    </div>
+</div>

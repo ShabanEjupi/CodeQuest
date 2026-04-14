@@ -1,0 +1,45 @@
+@{
+    var isSq = System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq";
+    ViewData["Title"] = isSq ? "Veçoritë Tona" : "Our Features";
+}
+
+<div class="hero">
+    <div class="hero-inner" style="max-width: 1200px; margin: auto;">
+        <h1 class="hero-title">@(isSq ? "Çfarë Ofrojmë?" : "What We Offer")</h1>
+        <p class="hero-sub" style="margin-bottom: 40px;">
+            @(isSq ? "Një aplikacion i fuqishëm me funksionalitete pa limit" : "A powerful application with limitless features")
+        </p>
+
+        <div class="home-grid">
+            <div class="home-section-box">
+                <h3 style="color: var(--accent-blue);">⚡ @(isSq ? "Shpejtësi Rrufe" : "Lightning Speed")</h3>
+                <p>@(isSq ? "Sistemi jonë proceson mijëra transaksione në sekond pa asnjë lloj defekti apo ngadalësimi." : "Our system processes thousands of transactions per second without any defects or slowdowns.")</p>
+            </div>
+            
+            <div class="home-section-box">
+                <h3 style="color: var(--accent-green);">🔒 @(isSq ? "Siguri Inxhinierike" : "Engineering Security")</h3>
+                <p>@(isSq ? "Të dhënat tuaja ruhen në qendra të të dhënave super të sigurta (AWS / Azure) me enkriptim ushtarak (AES-256)." : "Your data is stored in ultra-secure datacenters (AWS / Azure) with military-grade encryption (AES-256).")</p>
+            </div>
+
+            <div class="home-section-box">
+                <h3 style="color: var(--accent-yellow);">📊 @(isSq ? "Pulti Ndërveprues" : "Interactive Dashboard")</h3>
+                <p>@(isSq ? "Shikoni grafikonet tuaja të shitjes, krahasimet mujore dhe vizualizime 3D të inventarit tuaj – e gjitha live." : "View your sales charts, monthly comparisons, and 3D visualizations of your inventory - all live.")</p>
+            </div>
+
+            <div class="home-section-box">
+                <h3 style="color: var(--accent-purple);">🔄 @(isSq ? "Integrim me Palë Të Treta" : "Third-Party Integrations")</h3>
+                <p>@(isSq ? "Jemi të integruar me printerë fiskalë (Shteti i Kosovës), pajisje POS për banka dhe shërbime dërgese Gjirafa, etj." : "We are integrated with fiscal printers (State of Kosova), bank POS devices, and delivery services like Gjirafa, etc.")</p>
+            </div>
+
+            <div class="home-section-box">
+                <h3 style="color: var(--accent-red);">📱 @(isSq ? "Aplikacion Bashkëpunues" : "Collaborative App")</h3>
+                <p>@(isSq ? "Stafi i thellë bashkëpunues mund të koordinoj në të njëjtin mjedis pune nga disa pajisje." : "Deeply collaborative staff can coordinate in the same workspace from multiple devices.")</p>
+            </div>
+
+            <div class="home-section-box">
+                <h3 style="color: var(--text-main);">☁️ @(isSq ? "Sinkronizimi Cloud" : "Cloud Sync")</h3>
+                <p>@(isSq ? "Mbijeton ndërprerjet e internetit me databazën lokale automatikisht e cila sinkronizohet në cloud sapo të kthehet lidhja." : "Survives internet outages via local database which automatically syncs to the cloud when connection returns.")</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -32,6 +32,12 @@ public class HomeController : Controller
     public IActionResult Services() => View();
 
     [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
+    public IActionResult Features() => View();
+
+    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
+    public IActionResult Careers() => View();
+
+    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
     public IActionResult About() => View();
 
     [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
