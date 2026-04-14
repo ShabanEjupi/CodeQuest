@@ -15,35 +15,27 @@ public class HomeController : Controller
         _emailService = emailService;
     }
 
-    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
     public IActionResult Index()
     {
         return View();
     }
 
-    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 60)]
     public async Task<IActionResult> CodeQuest()
     {
         var top = await _leaderboard.GetTopAsync(10);
         return View(top);
     }
 
-    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
     public IActionResult Services() => View();
 
-    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
     public IActionResult Features() => View();
 
-    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
     public IActionResult Careers() => View();
 
-    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
     public IActionResult About() => View();
 
-    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
     public IActionResult Faq() => View();
 
-    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
     public IActionResult Pricing() => View();
 
     public IActionResult Contact() => View();
