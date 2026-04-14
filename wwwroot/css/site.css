@@ -691,6 +691,19 @@ a:hover {
     padding: 0.5rem;
 }
 
+@media (max-width: 1024px) {
+    .site-nav {
+        padding: 1rem 2rem;
+    }
+    .game-wrap, .result-wrap {
+        padding: 0 1rem;
+        margin-top: 1rem;
+    }
+    .site-footer {
+        padding: 1.5rem 2rem;
+    }
+}
+
 @media (max-width: 768px) {
     .site-nav {
         flex-wrap: wrap;

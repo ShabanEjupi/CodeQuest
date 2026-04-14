@@ -23,12 +23,22 @@ public static class DbSeeder
                 for (int i=0; i<enChoices.Length; i++) cEn.Choices.Add(new Choice { Text = enChoices[i].text, IsCorrect = enChoices[i].ok, OrderIndex = i });
                 chapters.Add(cEn);
             }
+            else
+            {
+                var existingEn = db.Chapters.FirstOrDefault(c => c.Language == "en" && c.GameType == gameType && c.Concept == concept);
+                if (existingEn != null) { existingEn.Label = enLabel; existingEn.StoryHtml = enStory; existingEn.CodeHtml = enCode; existingEn.QuizPrompt = enPrompt; existingEn.OkFeedback = enOk; existingEn.BadFeedback = enBad; existingEn.OrderIndex = order; }
+            }
 
             if (!existingKeys.Contains("sq_" + gameType + "_" + concept))
             {
                 var cSq = new Chapter { Language = "sq", GameType = gameType, OrderIndex = order, Concept = concept, Label = sqLabel, StoryHtml = sqStory, CodeHtml = sqCode, QuizPrompt = sqPrompt, OkFeedback = sqOk, BadFeedback = sqBad };
                 for (int i=0; i<sqChoices.Length; i++) cSq.Choices.Add(new Choice { Text = sqChoices[i].text, IsCorrect = sqChoices[i].ok, OrderIndex = i });
                 chapters.Add(cSq);
+            }
+            else
+            {
+                var existingSq = db.Chapters.FirstOrDefault(c => c.Language == "sq" && c.GameType == gameType && c.Concept == concept);
+                if (existingSq != null) { existingSq.Label = sqLabel; existingSq.StoryHtml = sqStory; existingSq.CodeHtml = sqCode; existingSq.QuizPrompt = sqPrompt; existingSq.OkFeedback = sqOk; existingSq.BadFeedback = sqBad; existingSq.OrderIndex = order; }
             }
         }
 
@@ -290,13 +300,13 @@ public static class DbSeeder
         // POS Chapters
         AddChapter(0, "IntroPOS",
             "Chapter 1 · The POS Interface",
-            "<p>Welcome to <strong>KosovaPOS</strong>! You are starting your shift. First, what does POS stand for and why is it essential for any retail business?</p><img src='/img/pos_intro.png' alt='POS Intro' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "<p>Welcome to <strong>KosovaPOS</strong>! You are starting your shift. First, what does POS stand for and why is it essential for any retail business?</p><img src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800' alt='POS Intro' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
             "--- Starting POS System ---",
             "What does POS stand for?",
             "✓ Correct! It is the Point of Sale.",
             "✗ Think about where a sale happens.",
             "Kapitulli 1 · Ndërfaqja e POS",
-            "<p>Mirësevini në <strong>KosovaPOS</strong>! Po fillon ndërrimin tuaj. Së pari, çfarë do të thotë POS dhe pse është thelbësor?</p><img src='/img/pos_intro.png' alt='POS Intro' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "<p>Mirësevini në <strong>KosovaPOS</strong>! Po fillon ndërrimin tuaj. Së pari, çfarë do të thotë POS dhe pse është thelbësor?</p><img src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800' alt='POS Intro' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
             "--- Nisja e POS ---",
             "Çfarë do të thotë POS?",
             "✓ Saktë! Do të thotë Pika e Shitjes.",
@@ -306,13 +316,13 @@ public static class DbSeeder
 
         AddChapter(1, "FiscalPrinter",
             "Chapter 2 · The Fiscal Printer",
-            "<p>In the Republic of Kosova, every sale must go through a <strong>Fiscal Printer</strong> (Arka Fiskale) certified by ATK (Administrata Tatimore e Kosovës).</p><img src='/img/fiscal_printer.png' alt='Fiscal Printer' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "<p>In the Republic of Kosova, every sale must go through a <strong>Fiscal Printer</strong> (Arka Fiskale) certified by ATK (Administrata Tatimore e Kosovës).</p><img src='https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?auto=format&fit=crop&q=80&w=800' alt='Fiscal Printer' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
             "--- Fiscal Printer Connection: OK ---",
             "Why do we need a Fiscal Printer?",
             "✓ Yes! It ensures sales are reported and taxes are paid.",
             "✗ It's required by law for tax recording.",
             "Kapitulli 2 · Arka Fiskale",
-            "<p>Në Republikën e Kosovës, çdo shitje duhet të kalojë përmes një <strong>Arke Fiskale</strong> të certifikuar nga ATK-ja.</p><img src='/img/fiscal_printer.png' alt='Arka Fiskale' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "<p>Në Republikën e Kosovës, çdo shitje duhet të kalojë përmes një <strong>Arke Fiskale</strong> të certifikuar nga ATK-ja.</p><img src='https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?auto=format&fit=crop&q=80&w=800' alt='Arka Fiskale' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
             "--- Lidhja me Arkën Fiskale: OK ---",
             "Pse përdorim Arkën Fiskale?",
             "✓ Saktë! Raporton shitjet tek ATK-ja.",
@@ -322,13 +332,13 @@ public static class DbSeeder
 
         AddChapter(2, "Barcode",
             "Chapter 3 · Barcodes & Products",
-            "<p>Let's scan our first product! A barcode scanner reads the EAN/UPC code to find the exact item in our KosovaPOS database.</p><img src='/img/barcode_scanner.png' alt='Scanner' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "<p>Let's scan our first product! A barcode scanner reads the EAN/UPC code to find the exact item in our KosovaPOS database.</p><img src='https://images.unsplash.com/photo-1607344645866-009c520b61c9?auto=format&fit=crop&q=80&w=800' alt='Scanner' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
             "SCAN: 3830001234567 -> Found: 'Ujë Mineral 0.5L'",
             "What does the scanner actually scan?",
             "✓ Correct, the barcode translates into a unique ID.",
             "✗ It reads the barcode.",
             "Kapitulli 3 · Barkodet",
-            "<p>Le të skanojmë produktin e parë! Skaneri lexon kodin EAN/UPC për të gjetur artikullin thelbësor.</p><img src='/img/barcode_scanner.png' alt='Scanner' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "<p>Le të skanojmë produktin e parë! Skaneri lexon kodin EAN/UPC për të gjetur artikullin thelbësor.</p><img src='https://images.unsplash.com/photo-1607344645866-009c520b61c9?auto=format&fit=crop&q=80&w=800' alt='Scanner' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
             "SKANIM: 3830001234567 -> Gjetur: 'Ujë Mineral 0.5L'",
             "Çfarë lexon saktësisht skaneri?",
             "✓ Saktë, barkodi përfaqëson një ID unike.",
@@ -354,13 +364,13 @@ public static class DbSeeder
 
         AddChapter(4, "PaymentMethods",
             "Chapter 5 · Payment Methods",
-            "<p>A customer wants to pay for their order. You can accept Cash, Credit/Debit Card, or Mobile Payments. In the fiscal receipt, the payment method must be clearly marked.</p><img src='/img/pos_payment.png' alt='Payment' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "<p>A customer wants to pay for their order. You can accept Cash, Credit/Debit Card, or Mobile Payments. In the fiscal receipt, the payment method must be clearly marked.</p><img src='https://images.unsplash.com/photo-1556742044-fbbd63327d53?auto=format&fit=crop&q=80&w=800' alt='Payment' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
             "Total: 15.50 EUR. Pay with: [CASH] [CARD]",
             "Why does the payment type matter for the fiscal printer?",
             "✓ Yes, ATK requires tracking of cash vs. electronic payments.",
             "✗ It matters for accounting and tax declaring.",
             "Kapitulli 5 · Kthimi i Kusurit",
-            "<p>Klienti po paguan. Mund të pranoni Para të Gatshme (Cash) ose Kartelë. Lloji i pagesës printohet theksueshëm në kuponin fiskal.</p><img src='/img/pos_payment.png' alt='Payment' style='max-width:100%; object-fit:cover; border-radius:10px;' />",
+            "<p>Klienti po paguan. Mund të pranoni Para të Gatshme (Cash) ose Kartelë. Lloji i pagesës printohet theksueshëm në kuponin fiskal.</p><img src='https://images.unsplash.com/photo-1556742044-fbbd63327d53?auto=format&fit=crop&q=80&w=800' alt='Payment' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
             "Total: 15.50 EUR. Paguaj me: [CASH] [KARTELË]",
             "Pse duhet specifikuar metoda e pagesës në arkë fiskale?",
             "✓ Kështu Administrata Tatimore e di saktë si janë marrë paratë.",
@@ -400,11 +410,59 @@ public static class DbSeeder
             new[] { ("Process it through POS to print a return fiscal receipt & update stock", true), ("Trash the original receipt and give hidden cash back", false), ("Nothing, returns aren't allowed", false), ("Ignore VAT changes", false) },
             new[] { ("Kalohet në POS për kupon të kthimit & përditësim të depose/stokut", true), ("Hidhni kuponin dhe kthe paratë fshehurazi", false), ("Asgjë, nuk lejohen", false), ("Injorohenndryshimet e TVSH-së", false) }, "POS");
 
+        AddChapter(7, "Inventory",
+            "Chapter 8 · Inventory Management",
+            "<p>Stock levels must be accurate. Every time a sale is completed, the items are mechanically deducted from the inventory. When a truck arrives, you add stock.</p><img src='https://images.unsplash.com/photo-1586528116311-ad8ed74509b5?auto=format&fit=crop&q=80&w=800' alt='Inventory' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
+            "INVENTORY UPDATE LOG",
+            "What happens to the inventory when a sale is finalized?",
+            "✓ Correct! Quantities are updated automatically.",
+            "✗ Think about stock accuracy.",
+            "Kapitulli 8 · Menaxhimi i Stokut",
+            "<p>Nivelet e stokut duhet të jenë të sakta. Sa herë një shitje mbyllet, artikujt zbriten nga inventari. Kur vjen një dërgesë, shtohet stoku.</p><img src='https://images.unsplash.com/photo-1586528116311-ad8ed74509b5?auto=format&fit=crop&q=80&w=800' alt='Inventory' style='max-width:100%; object-fit:cover; border-radius:10px; margin: 15px 0;' />",
+            "LOG I PËRDITËSIMIT TË STOKUT",
+            "Çfarë i ndodh inventarit sapo kryhet një shitje?",
+            "✓ Saktë! Sasitë përditësohen automatikisht.",
+            "✗ Mendo për saktësinë e stokut.",
+            new[] { ("Inventory levels are automatically deducted", true), ("Nothing happens", false), ("Inventory is manually written on paper", false), ("The shift ends", false) },
+            new[] { ("Nivelet e inventarit zbriten automatikisht", true), ("Asgjë nuk ndodh", false), ("Inventari shkruhet manualisht në letër", false), ("Ndërrimi mbaron", false) }, "POS");
+
+        AddChapter(8, "Discounts",
+            "Chapter 9 · Discounts & Loyalty",
+            "<p>Offering discounts or a Loyalty Card gives special perks to returning customers. Applying it in the POS adjusts the final price while calculating taxes correctly.</p>",
+            "CUSTOMER: VIP | DISCOUNT: 10%",
+            "Why is the discount processed through the POS system directly?",
+            "✓ Exactly, to ensure proper tax calculation and transparent pricing.",
+            "✗ Taxes must be accurate based on final price.",
+            "Kapitulli 9 · Zbritjet & Besnikëria",
+            "<p>Ofrimi i zbritjeve ose një Kartelë Besnikërie i jep përfitime të veçanta klientëve. Aplikimi në POS rregullon çmimin final duke llogaritur TVSH-në saktë.</p>",
+            "KLIENT: VIP | ZBRITJE: 10%",
+            "Pse zbritja duhet kaluar gjithmonë përmes sistemit POS?",
+            "✓ Ashtu është, për të llogaritur TVSH-në saktë në çmimin final.",
+            "✗ Taksat kërkojnë vlerën pas zbritjes.",
+            new[] { ("To recalculate taxes on the new discounted price", true), ("To just make the receipt look longer", false), ("It doesn't have to be, you can give cash back", false), ("Only to collect emails", false) },
+            new[] { ("Të rillogariten taksat në çmimin e ri me zbritje", true), ("Vetëm për të bërë kuponin të gjatë", false), ("S'ka nevojë, ktheni cash dore", false), ("Për të marrë emailin e klientit", false) }, "POS");
+
+        AddChapter(9, "CashDrawer",
+            "Chapter 10 · The Cash Drawer",
+            "<p>The cash drawer contains the day's physical money and is secured. It pops open ONLY when an authorized sale is recorded or via a secure 'Open Drawer' command by managers.</p>",
+            ">> DRAWER KICK SIGNAL SENT",
+            "When should the cash drawer electronically open?",
+            "✓ Correct, usually only upon closing a transaction.",
+            "✗ Mostly it opens on finalized transactions.",
+            "Kapitulli 10 · Sirtari i Parave",
+            "<p>Sirtari mban paratë fizike dhe është i siguruar. Ai hapet VETËM kur një shitje e autorizuar regjistrohet ose nga një komandë e sigurt nga menaxherët.</p>",
+            ">> KOMANDA PËR HAPJE E DËRGUAR",
+            "Kur duhet të hapet elektronikisht sirtari i parave?",
+            "✓ Saktë, sapo të mbyllet një transaksion valid.",
+            "✗ Zakonisht hapet pas printimit të kuponit.",
+            new[] { ("Only when a valid transaction is finalized or by manager key", true), ("Whenever a customer walks in", false), ("Every 5 minutes", false), ("It stays unlocked all day", false) },
+            new[] { ("Vetëm pasi mbyllet transaksioni ose me çelës menaxheri", true), ("Sa herë hyn një klient", false), ("Çdo 5 minuta", false), ("Qëndron hapur gjithë ditën", false) }, "POS");
+
         if (chapters.Any())
         {
             db.Chapters.AddRange(chapters);
-            db.SaveChanges();
         }
+        db.SaveChanges();
 
         // ── Seed KosovaPOS Business Data ──────────────────────────────────────
         if (!db.Businesses.Any())
