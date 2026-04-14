@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Pricing";
+}
+
+<div class="hero">
+    <h1 class="hero-title">Pricing Plans</h1>
+    <p class="hero-desc">Choose the KOSOVAPOS plan that powers your retail team.</p>
+</div>
+
+<div class="pricing-cards">
+    <div class="pricing-card">
+        <h3>Starter</h3>
+        <p class="price">$19<span>/mo</span></p>
+        <p class="pricing-desc">Perfect for small businesses starting their digital journey.</p>
+        <ul>
+            <li>✔ Up to 5 Users</li>
+            <li>✔ Basic Modules</li>
+            <li>✔ Standard Support</li>
+        </ul>
+        <a asp-controller="Home" asp-action="Contact" class="btn-ghost">Get Started</a>
+    </div>
+
+    <div class="pricing-card popular">
+        <div class="popular-badge">Most Popular</div>
+        <h3>Professional</h3>
+        <p class="price">$49<span>/mo</span></p>
+        <p class="pricing-desc">Advanced features to supercharge your cashiers.</p>
+        <ul>
+            <li>✔ Up to 25 Users</li>
+            <li>✔ All Advanced Modules</li>
+            <li>✔ Live Leaderboards</li>
+            <li>✔ Priority Support</li>
+        </ul>
+        <a asp-controller="Home" asp-action="Contact" class="btn-primary">Get Pro</a>
+    </div>
+
+    <div class="pricing-card">
+        <h3>Enterprise</h3>
+        <p class="price">Custom</p>
+        <p class="pricing-desc">For large retail chains needing heavy customization.</p>
+        <ul>
+            <li>✔ Unlimited Users</li>
+            <li>✔ Custom Training Modules</li>
+            <li>✔ API Access</li>
+            <li>✔ Dedicated Manager</li>
+        </ul>
+        <a asp-controller="Home" asp-action="Contact" class="btn-ghost">Contact Us</a>
+    </div>
+</div>

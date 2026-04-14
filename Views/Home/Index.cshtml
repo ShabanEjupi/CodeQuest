@@ -16,12 +16,12 @@
             @(isSq ? "Eksploro Shërbimet Tona" : "Explore Our Services")
         </a>
 
-        <div style="margin-top: 50px;">
-            <img src="~/img/front-pos-page.png" alt="Front POS Dashboard" style="width: 100%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);" />
+        <div>
+            <img src="~/img/front-pos-page.png" alt="Front POS Dashboard" class="hero-image" />
         </div>
 
-        <div style="margin-top: 50px; text-align: left; background: rgba(0,0,0,0.4); padding: 30px; border-radius: 8px;">
-            <h2 style="color: #ff5722; margin-bottom: 20px;">
+        <div class="home-section-box" style="margin-top: 3rem;">
+            <h2>
                 @(isSq ? "Fuqizimi i Bizneseve Moderne" : "Empowering Modern Businesses")
             </h2>
             <p>
@@ -29,19 +29,19 @@
             </p>
         </div>
 
-        <div style="margin-top: 50px; display: flex; flex-wrap: wrap; gap: 30px;">
-            <div style="flex: 1; min-width: 300px; background: rgba(0,0,0,0.4); padding: 30px; border-radius: 8px; text-align: left;">
-                <h3 style="color: #4caf50; margin-bottom: 15px;">@(isSq ? "Pse të zgjidhni ne?" : "Why Choose Us?")</h3>
-                <ul style="list-style-type: none; padding: 0;">
-                    <li style="margin-bottom: 10px;">✅ @(isSq ? "Dizajn modern dhe i lehtë për t'u përdorur" : "Modern and easy-to-use design")</li>
-                    <li style="margin-bottom: 10px;">✅ @(isSq ? "Shpejtësi dhe performancë e lartë" : "High speed and performance")</li>
-                    <li style="margin-bottom: 10px;">✅ @(isSq ? "Mbështetje teknike 24/7" : "24/7 technical support")</li>
-                    <li style="margin-bottom: 10px;">✅ @(isSq ? "Përshtatje sipas nevojave tuaja" : "Customization to your needs")</li>
+        <div class="home-grid">
+            <div class="home-section-box">
+                <h3 style="color: var(--accent-green);">@(isSq ? "Pse të zgjidhni ne?" : "Why Choose Us?")</h3>
+                <ul>
+                    <li>✅ @(isSq ? "Dizajn modern dhe i lehtë për t'u përdorur" : "Modern and easy-to-use design")</li>
+                    <li>✅ @(isSq ? "Shpejtësi dhe performancë e lartë" : "High speed and performance")</li>
+                    <li>✅ @(isSq ? "Mbështetje teknike 24/7" : "24/7 technical support")</li>
+                    <li>✅ @(isSq ? "Përshtatje sipas nevojave tuaja" : "Customization to your needs")</li>
                 </ul>
             </div>
-            <div style="flex: 1; min-width: 300px; background: rgba(0,0,0,0.4); padding: 30px; border-radius: 8px; text-align: left;">
-                 <h3 style="color: #2196f3; margin-bottom: 15px;">@(isSq ? "Kush e përdor KOSOVAPOS?" : "Who Uses KOSOVAPOS?")</h3>
-                 <p>@(isSq ? "Sistemi ynë i besohet nga mbi 500+ biznese anembanë Kosovës dhe rajonit, duke përfshirë:" : "Our system is trusted by over 500+ businesses across Kosova and the region, including:")</p>
+            <div class="home-section-box">
+                 <h3 style="color: var(--accent-blue);">@(isSq ? "Kush e përdor KOSOVAPOS?" : "Who Uses KOSOVAPOS?")</h3>
+                 <p style="margin-bottom: 1rem; color: var(--text-muted);">@(isSq ? "Sistemi ynë i besohet nga mbi 500+ biznese anembanë Kosovës dhe rajonit, duke përfshirë:" : "Our system is trusted by over 500+ businesses across Kosova and the region, including:")</p>
                  <ul style="list-style-type: disc; padding-left: 20px;">
                     <li>@(isSq ? "Rrjete Restorantesh & Pizzeri" : "Restaurant Chains & Pizzerias")</li>
                     <li>@(isSq ? "Markete & Supermarkete" : "Markets & Supermarkets")</li>

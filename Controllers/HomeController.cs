@@ -34,6 +34,12 @@ public class HomeController : Controller
     [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
     public IActionResult About() => View();
 
+    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
+    public IActionResult Faq() => View();
+
+    [Microsoft.AspNetCore.OutputCaching.OutputCache(Duration = 3600)]
+    public IActionResult Pricing() => View();
+
     public IActionResult Contact() => View();
 
     [HttpPost]
