@@ -74,6 +74,7 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
     }
 });
 
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IChapterService, ChapterService>();
 builder.Services.AddScoped<IGameSessionService, GameSessionService>();
 builder.Services.AddScoped<ILeaderboardService, LeaderboardService>();

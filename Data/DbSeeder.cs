@@ -6,7 +6,11 @@ public static class DbSeeder
 {
     public static void Seed(AppDbContext db)
     {
-        var existingKeys = db.Chapters.Select(c => c.Language + "_" + c.GameType + "_" + c.Concept).ToHashSet();
+        var existingChapters = db.Chapters
+            .AsEnumerable()
+            .GroupBy(c => c.Language + "_" + c.GameType + "_" + c.Concept)
+            .ToDictionary(g => g.Key, g => g.First());
+
         var chapters = new List<Chapter>();
 
         // EN & SQ helper to create bilingual chapters easily
@@ -17,7 +21,8 @@ public static class DbSeeder
             (string text, bool ok)[] sqChoices,
             string gameType = "Coding")
         {
-            if (!existingKeys.Contains("en_" + gameType + "_" + concept))
+            var enKey = "en_" + gameType + "_" + concept;
+            if (!existingChapters.TryGetValue(enKey, out var existingEn))
             {
                 var cEn = new Chapter { Language = "en", GameType = gameType, OrderIndex = order, Concept = concept, Label = enLabel, StoryHtml = enStory, CodeHtml = enCode, QuizPrompt = enPrompt, OkFeedback = enOk, BadFeedback = enBad };
                 for (int i=0; i<enChoices.Length; i++) cEn.Choices.Add(new Choice { Text = enChoices[i].text, IsCorrect = enChoices[i].ok, OrderIndex = i });
@@ -25,11 +30,11 @@ public static class DbSeeder
             }
             else
             {
-                var existingEn = db.Chapters.FirstOrDefault(c => c.Language == "en" && c.GameType == gameType && c.Concept == concept);
-                if (existingEn != null) { existingEn.Label = enLabel; existingEn.StoryHtml = enStory; existingEn.CodeHtml = enCode; existingEn.QuizPrompt = enPrompt; existingEn.OkFeedback = enOk; existingEn.BadFeedback = enBad; existingEn.OrderIndex = order; }
+                existingEn.Label = enLabel; existingEn.StoryHtml = enStory; existingEn.CodeHtml = enCode; existingEn.QuizPrompt = enPrompt; existingEn.OkFeedback = enOk; existingEn.BadFeedback = enBad; existingEn.OrderIndex = order;
             }
 
-            if (!existingKeys.Contains("sq_" + gameType + "_" + concept))
+            var sqKey = "sq_" + gameType + "_" + concept;
+            if (!existingChapters.TryGetValue(sqKey, out var existingSq))
             {
                 var cSq = new Chapter { Language = "sq", GameType = gameType, OrderIndex = order, Concept = concept, Label = sqLabel, StoryHtml = sqStory, CodeHtml = sqCode, QuizPrompt = sqPrompt, OkFeedback = sqOk, BadFeedback = sqBad };
                 for (int i=0; i<sqChoices.Length; i++) cSq.Choices.Add(new Choice { Text = sqChoices[i].text, IsCorrect = sqChoices[i].ok, OrderIndex = i });
@@ -37,8 +42,7 @@ public static class DbSeeder
             }
             else
             {
-                var existingSq = db.Chapters.FirstOrDefault(c => c.Language == "sq" && c.GameType == gameType && c.Concept == concept);
-                if (existingSq != null) { existingSq.Label = sqLabel; existingSq.StoryHtml = sqStory; existingSq.CodeHtml = sqCode; existingSq.QuizPrompt = sqPrompt; existingSq.OkFeedback = sqOk; existingSq.BadFeedback = sqBad; existingSq.OrderIndex = order; }
+                existingSq.Label = sqLabel; existingSq.StoryHtml = sqStory; existingSq.CodeHtml = sqCode; existingSq.QuizPrompt = sqPrompt; existingSq.OkFeedback = sqOk; existingSq.BadFeedback = sqBad; existingSq.OrderIndex = order;
             }
         }
 

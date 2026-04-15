@@ -1,6 +1,7 @@
 using CodeQuest.Data;
 using CodeQuest.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace CodeQuest.Services;
 
@@ -13,8 +14,13 @@ public interface ILeaderboardService
 public class LeaderboardService : ILeaderboardService
 {
     private readonly AppDbContext _db;
+    private readonly IMemoryCache _cache;
 
-    public LeaderboardService(AppDbContext db) => _db = db;
+    public LeaderboardService(AppDbContext db, IMemoryCache cache)
+    {
+        _db = db;
+        _cache = cache;
+    }
 
     public async Task RecordAsync(GameSession session)
     {
@@ -36,13 +42,23 @@ public class LeaderboardService : ILeaderboardService
             AchievedAt     = session.CompletedAt ?? DateTime.UtcNow
         });
         await _db.SaveChangesAsync();
+
+        _cache.Remove($"leaderboard_{20}");
+        _cache.Remove($"leaderboard_{10}");
     }
 
-    public Task<List<LeaderboardEntry>> GetTopAsync(int count = 20) =>
-        _db.LeaderboardEntries
-           .AsNoTracking()
-           .OrderByDescending(e => e.Score)
-           .ThenByDescending(e => e.AchievedAt)
-           .Take(count)
-           .ToListAsync();
+    public Task<List<LeaderboardEntry>> GetTopAsync(int count = 20)
+    {
+        var cacheKey = $"leaderboard_{count}";
+        return _cache.GetOrCreateAsync(cacheKey, entry =>
+        {
+            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2);
+            return _db.LeaderboardEntries
+               .AsNoTracking()
+               .OrderByDescending(e => e.Score)
+               .ThenByDescending(e => e.AchievedAt)
+               .Take(count)
+               .ToListAsync();
+        });
+    }
 }
