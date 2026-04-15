@@ -301,6 +301,57 @@ public static class DbSeeder
             new[] { ("To test individual components of the code", true), ("To increase application size", false), ("To translate code to English", false), ("To style text on a webpage", false) },
             new[] { ("Për të testuar komponentë të veçantë të kodit", true), ("Për të rritur madhësinë e aplikacionit", false), ("Për të përkthyer kodin në anglisht", false), ("Për të stiluar tekstin", false) });
 
+        // 16. LINQ
+        AddChapter(15, "LINQ",
+            "Chapter 16 · The Data Query",
+            "<p>To filter and transform lists of data easily, developers use <strong>LINQ (Language Integrated Query)</strong> in C#.</p>",
+            "<span class='kw'>var</span> admins = users.Where(u => u.Role == <span class='str'>\"admin\"</span>).ToList();",
+            "What is the primary benefit of using LINQ?",
+            "✓ Correct! It provides a powerful and readable way to query collections.",
+            "✗ Think about querying data collections.",
+            "Kapitulli 16 · Kërkimi i të Dhënave",
+            "<p>Për të filtruar dhe transformuar lista me të dhëna lehtësisht, zhvilluesit përdorin <strong>LINQ (Language Integrated Query)</strong> në C#.</p>",
+            "<span class='kw'>var</span> adminet = perdoruesit.Where(p => p.Roli == <span class='str'>\"admin\"</span>).ToList();",
+            "Cili është përfitimi kryesor i përdorimit të LINQ?",
+            "✓ E saktë! Ofron një mënyrë të fuqishme dhe të lexueshme për të kërkuar në koleksione.",
+            "✗ Mendoni për kërkimin brenda koleksioneve.",
+            new[] { ("To make web pages load faster", false), ("To provide a readable way to query collections", true), ("To style user interfaces", false), ("To connect to physical printers", false) },
+            new[] { ("Për të ngarkuar faqet më shpejt", false), ("Për të ofruar një mënyrë të lexueshme kërkimi në koleksione", true), ("Për të dizajnuar ndërfaqet e përdoruesit", false), ("Për lidhjen me printerët", false) });
+
+        // 17. DEPENDENCY INJECTION
+        AddChapter(16, "Dependency Injection",
+            "Chapter 17 · The Service Provider",
+            "<p>Modern applications use <strong>Dependency Injection (DI)</strong> to provide objects with the services they need, making the code more modular and testable.</p>",
+            "<span class='kw'>public</span> <span class='fn'>UserService</span>(IDatabase db) { _db = db; }",
+            "Why do we use Dependency Injection?",
+            "✓ Spot on! It creates loosely coupled code that is easier to test and maintain.",
+            "✗ DI is used to decouple components.",
+            "Kapitulli 17 · Ofrimi i Shërbimeve",
+            "<p>Aplikacionet moderne përdorin <strong>Injektimin e Varësisë (DI)</strong> për t'u ofruar objekteve shërbimet që u nevojiten, duke e bërë kodin më modular dhe më të testueshëm.</p>",
+            "<span class='kw'>public</span> <span class='fn'>SherbimiPerdoruesit</span>(IBazaTeDhenave btd) { _btd = btd; }",
+            "Pse e përdorim Injektimin e Varësisë?",
+            "✓ E saktë! Krijon kod pak të varur (loosely coupled) që testohet e mirëmbahet lehtë.",
+            "✗ DI përdoret për të shkëputur komponentët.",
+            new[] { ("To tightly couple classes together", false), ("To create modular and testable code", true), ("To prevent objects from being created", false), ("To execute SQL commands directly", false) },
+            new[] { ("Për t'i lidhur ngushtë klasat", false), ("Për të krijuar kod modular dhe të testueshëm", true), ("Për të ndaluar krijimin e objekteve", false), ("Për të ekzekutuar komanda SQL direkt", false) });
+
+        // 18. DESIGN PATTERNS
+        AddChapter(17, "Design Patterns",
+            "Chapter 18 · The Architectural Blueprints",
+            "<p>A <strong>Design Pattern</strong> is a proven solution to a common software design problem. For example, the Singleton pattern ensures only one instance of a class exists.</p>",
+            "<span class='kw'>public static</span> Settings Instance { <span class='kw'>get</span>; }",
+            "What is a Design Pattern in software engineering?",
+            "✓ Exactly! It's a reusable solution to a commonly occurring problem.",
+            "✗ Look for the definition as a reusable template.",
+            "Kapitulli 18 · Skicat Arkitekturore",
+            "<p>Një <strong>Model Dizajni (Design Pattern)</strong> është një zgjidhje e provuar për një problem të zakonshëm në dizajn të softuerit. Për shembull, modeli Singleton siguron që vetëm një instancë e klasës të vijojë.</p>",
+            "<span class='kw'>public static</span> Rregullimet Instanca { <span class='kw'>get</span>; }",
+            "Çfarë është një Model Dizajni në inxhinierinë softuerike?",
+            "✓ E saktë! Është një zgjidhje e ripërdorshme për probleme të njohura.",
+            "✗ Kërkoni përkufizimin e një shembulli të ripërdorshëm.",
+            new[] { ("A specific coding language", false), ("A reusable solution to a common design problem", true), ("A tool that draws diagrams", false), ("A function that returns a pattern of numbers", false) },
+            new[] { ("Një gjuhë e veçantë kodimi", false), ("Një zgjidhje e ripërdorshme për probleme dizajni", true), ("Një vegël që vizaton diagrame", false), ("Një funksion që kthen numra", false) });
+
         // POS Chapters
         AddChapter(0, "IntroPOS",
             "Chapter 1 · The POS Interface",
