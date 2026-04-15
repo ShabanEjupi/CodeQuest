@@ -50,6 +50,30 @@
                  </ul>
             </div>
         </div>
+
+        <div style="margin-top: 5rem; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 4rem;">
+            <h2 style="font-size: 2.5em; margin-bottom: 2rem;">
+                @(isSq ? "Çfarë thonë klientët tanë?" : "What do our clients say?")
+            </h2>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;">
+                <div class="home-section-box" style="flex: 1; min-width: 300px; max-width: 350px;">
+                    <p style="font-style: italic; color: #ccc;">"KOSOVAPOS ka revolucionarizuar mënyrën se si menaxhojmë arkën tonë. Është shumë i shpejtë, pa gabime dhe mbështetja nga ana e tyre është e jashtëzakonshme."</p>
+                    <p style="margin-top: 1rem; font-weight: bold; color: var(--accent-blue);">- Luan Gashi, Supermarket 'Lida'</p>
+                </div>
+                <div class="home-section-box" style="flex: 1; min-width: 300px; max-width: 350px;">
+                    <p style="font-style: italic; color: #ccc;">"Mbase kemi ndërruar pesë sisteme të ndryshme në restorantin tonë gjatë viteve, por që kur vendosëm këtë as që na bie në mend për tjetër. Punon si sahat!"</p>
+                    <p style="margin-top: 1rem; font-weight: bold; color: var(--accent-green);">- Arbër Haxhiu, Pizzeria 'Napoli'</p>
+                </div>
+                <div class="home-section-box" style="flex: 1; min-width: 300px; max-width: 350px;">
+                    <p style="font-style: italic; color: #ccc;">"Analizat vizuale dhe sinkronizimi 'Cloud' na ndihmojnë të shohim se cilat rroba na ecin më tepër dhe t'i porositim prapë. Dizajn fantastik!"</p>
+                    <p style="margin-top: 1rem; font-weight: bold; color: var(--accent-purple);">- Valmira Deda, Fashion Store</p>
+                </div>
+            </div>
+
+            <a asp-controller="Home" asp-action="Contact" class="btn-primary" style="margin-top: 3rem; display: inline-block;">
+                @(isSq ? "Bëhu pjesë e tregimit tonë!" : "Become part of our story!")
+            </a>
+        </div>
     </div>
 </div>
 

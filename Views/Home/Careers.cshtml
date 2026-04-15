@@ -57,7 +57,17 @@
         </div>
 
         <div style="margin-top: 50px;">
-            <p style="color: var(--text-muted);">
+            <p style="color: var(--text-muted); font-size: 1.1em; margin-bottom: 20px;">
+                @(isSq ? "Përse duhet t'i bashkoheni ekipit të KOSOVAPOS?" : "Why should you join the KOSOVAPOS team?")
+            </p>
+            <ul style="list-style: none; padding: 0; display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); text-align: left;">
+                <li style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px;">🚀 @(isSq ? "Kulturë inovative pa gjeneralizime korporative" : "Innovative culture with zero corporate red-tape")</li>
+                <li style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px;">💻 @(isSq ? "Pajisje moderne (MacBook Pro, dy monitorë 4K)" : "Modern equipment (MacBook Pro, dual 4K monitors)")</li>
+                <li style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px;">🎓 @(isSq ? "Buxhet zhvillimi dhe trajnime mbarëkombëtare" : "Development budget & nation-wide trainings")</li>
+                <li style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px;">🍕 @(isSq ? "Ushqim dhe pije falas në ambientet e zyrës" : "Free catered lunch and snacks in office")</li>
+            </ul>
+
+            <p style="color: var(--text-muted); margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
                 @(isSq ? "Nuk e shihni pozicionin tuaj të idealit? Dërgoni CV tuaj në" : "Don't see your ideal role? Send your CV to") <strong>etinup1@gmail.com</strong> @(isSq ? "dhe ne do ta mbajmë për pozita të ardhshme." : "and we'll hold it for future openings.")
             </p>
         </div>

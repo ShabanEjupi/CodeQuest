@@ -41,10 +41,29 @@
         <p class="pricing-desc">@(isSq ? "Për rrjetet e mëdha të shitjes me pakicë që kanë nevojë për personalizim masiv." : "For large retail chains needing heavy customization.")</p>
         <ul>
             <li>✔ @(isSq ? "Përdorues të Pakufizuar" : "Unlimited Users")</li>
-            <li>✔ @(isSq ? "Module Trajnimi të Personalizuara" : "Custom Training Modules")</li>
+            <li>✔ @(isSq ? "Modulet e Plota për Ndërmarrje" : "Full Enterprise Modules")</li>
             <li>✔ API Access</li>
             <li>✔ @(isSq ? "Menaxher i Dedikuar" : "Dedicated Manager")</li>
+            <li>✔ @(isSq ? "Instalim On-Premise (Opsional)" : "On-Premise Installation (Optional)")</li>
         </ul>
         <a asp-controller="Home" asp-action="Contact" class="btn-ghost">@(isSq ? "Na Kontaktoni" : "Contact Us")</a>
+    </div>
+</div>
+
+<div class="pricing-extras" style="max-width: 1000px; margin: 60px auto; text-align: left; padding: 20px;">
+    <h2 style="text-align: center; margin-bottom: 30px;">@(isSq ? "Çfarë përfshihet në të gjitha planet?" : "What's included in all plans?")</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <div class="home-section-box" style="flex: 1; min-width: 300px;">
+            <h4 style="color: var(--accent-blue);">@(isSq ? "Migrimi Falas" : "Free Data Migration")</h4>
+            <p>@(isSq ? "Shpërngulja nga një tjetër POS sistem është shumë e lehtë! Ne ofrojmë migrim falas dhe të sigurt për t'u siguruar që asgjë të mos humbasë kur vendosni të lëvizni." : "Moving from another POS is very easy! We provide complimentary and secure data migration ensuring nothing gets misplaced when choosing to switch.")</p>
+        </div>
+        <div class="home-section-box" style="flex: 1; min-width: 300px;">
+            <h4 style="color: var(--accent-green);">@(isSq ? "Asistencë dhe Mbështetje" : "Assistance and Support")</h4>
+            <p>@(isSq ? "Mbështetja jonë teknike u shërben klientëve online dhe personalisht gjatë ditëve të punës." : "Our reliable tech support serves clients enthusiastically, both strictly online or in-person operations during working days.")</p>
+        </div>
+        <div class="home-section-box" style="flex: 1; min-width: 300px;">
+            <h4 style="color: var(--accent-yellow);">@(isSq ? "Trajnim për Personelin" : "Staff Training")</h4>
+            <p>@(isSq ? "Kur u zgjidhni KOSOVAPOS, ekipi juaj do përfitojë disa orë trajnim direkt për ta mësuar panelin dhe t'i jepni atyre rritje të dukshme besueshmërie në sistemin." : "When selecting KOSOVAPOS, your team automatically obtains a few instructional training hours with an active instructor ensuring comprehensive confidence managing the exact interface daily.")</p>
+        </div>
     </div>
 </div>

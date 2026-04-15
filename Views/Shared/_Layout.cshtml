@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@(ViewData["Title"] != null ? ViewData["Title"] + " · KOSOVAPOS" : "KOSOVAPOS: Training Simulator")</title>
+    <title>@(ViewData["Title"] != null ? ViewData["Title"] + " · KOSOVAPOS" : "KOSOVAPOS: Point of Sale")</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -46,15 +46,11 @@
     </main>
 
     <footer class="site-footer">
-        <div>
-            <span>KOSOVAPOS v3.0 Training Simulator</span>
-            <span>Master your Point of Sale skills, one chapter at a time.</span>
-        </div>
-        <div style="margin-top: 15px; font-size: 0.9em; opacity: 0.9; text-align: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;">
+        <div style="margin-top: 15px; font-size: 0.9em; opacity: 0.9; text-align: center; padding-top: 10px;">
             <p style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px;">
                 <img src="~/favicon.ico" alt="KOSOVAPOS Logo" style="height:20px;width:auto;vertical-align:middle;margin-right:4px;" /> KOSOVAPOS <span style="color: #4caf50;">🛒</span> <span style="color: #2196f3;">👕</span>
             </p>
-            <p>Your comprehensive Point of Sale system for Pizzerias, Supermarkets, and Clothing Stores.</p>
+            <p>@(System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "sq" ? "Sistemi juaj i plotë Point of Sale për Pizeri, Supermarkete dhe Dyqane Rrobash." : "Your comprehensive Point of Sale system for Pizzerias, Supermarkets, and Clothing Stores.")</p>
         </div>
     </footer>
 
